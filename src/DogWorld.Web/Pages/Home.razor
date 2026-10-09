@@ -21,6 +21,24 @@
         </div>
     </header>
     <div class="section-heading" id="available-dogs"><div><p class="eyebrow">Find your companion</p><h2>Ready for a fresh start</h2></div><span class="image-note">Illustrations are placeholders</span></div>
+    <form class="breed-search" role="search" aria-label="Search dogs by breed" @onsubmit="SearchAsync" @onsubmit:preventDefault>
+        <div class="search-field">
+            <label for="breed-search">Find your favourite breed</label>
+            <input id="breed-search" type="search" placeholder="Try Beagle, Poodle, Labrador…" @bind="searchText" @bind:event="oninput" disabled="@loading" aria-describedby="search-hint" />
+            <span id="search-hint">Search by breed name or part of it.</span>
+        </div>
+        <div class="search-actions">
+            <input class="search-submit" type="submit" value="Search dogs" disabled="@loading" />
+            @if (!string.IsNullOrEmpty(appliedBreed) || !string.IsNullOrEmpty(searchText))
+            {
+                <input class="search-clear" type="button" value="Clear search" disabled="@loading" @onclick="ClearSearchAsync" />
+            }
+        </div>
+    </form>
+    @if (!string.IsNullOrEmpty(appliedBreed))
+    {
+        <p class="active-search">Breed contains <strong>@appliedBreed</strong></p>
+    }
     @if (loading)
     {
         <PageLoader />
@@ -34,7 +52,7 @@
     }
     else if (dogs.Count == 0)
     {
-        <p role="status">No dogs available.</p>
+        <p role="status">@(string.IsNullOrEmpty(appliedBreed) ? "No dogs available." : $"No dogs match “{appliedBreed}”. Try another breed or clear your search.")</p>
     }
     else
     {
@@ -86,6 +104,25 @@
     private const int PageSize = 12;
     private int currentPage = 1;
     private int totalCount;
+    private string searchText = string.Empty;
+    private string appliedBreed = string.Empty;
+
+    private async Task SearchAsync()
+    {
+        if (loading) return;
+        appliedBreed = searchText.Trim();
+        currentPage = 1;
+        await LoadDogsAsync();
+    }
+
+    private async Task ClearSearchAsync()
+    {
+        if (loading) return;
+        searchText = string.Empty;
+        appliedBreed = string.Empty;
+        currentPage = 1;
+        await LoadDogsAsync();
+    }
     private int TotalPages => (int)Math.Ceiling(totalCount / (double)PageSize);
     private async Task ChangePage(int page)
     {
@@ -106,7 +143,9 @@
         failed = false;
         try
         {
-            using var response = await Http.GetAsync($"api/dogs?page={currentPage}&pageSize={PageSize}", lifetime.Token);
+            var url = $"api/dogs?page={currentPage}&pageSize={PageSize}";
+            if (!string.IsNullOrEmpty(appliedBreed)) url += $"&breed={Uri.EscapeDataString(appliedBreed)}";
+            using var response = await Http.GetAsync(url, lifetime.Token);
             response.EnsureSuccessStatusCode();
             dogs = await response.Content.ReadFromJsonAsync<List<AvailableDog>>(lifetime.Token)
                 ?? throw new JsonException("Expected a dog array.");

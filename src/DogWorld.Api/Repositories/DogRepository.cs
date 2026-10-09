@@ -15,13 +15,13 @@ public class DogRepository(DogWorldDbContext context) : IDogRepository, IDogDeta
         if (!string.IsNullOrWhiteSpace(breed))
         {
             var term = breed.Trim().ToUpperInvariant();
-            query = query.Where(dog => dog.Breed.Contains(term, StringComparison.CurrentCultureIgnoreCase));
+            query = query.Where(dog => dog.Breed.ToUpper().Contains(term));
         }
         var count = await query.CountAsync(cancellationToken);
 
         var dogs = await query.OrderBy(dog => dog.Name).ThenBy(dog => dog.Id)
             .Skip(checked((page - 1) * pageSize)).Take(pageSize)
-            .Select(dog => new DogWorld.Contracts.AvailableDog(dog.Id, dog.Name, dog.Breed, dog.AgeInMonths))
+            .Select(dog => new Contracts.AvailableDog(dog.Id, dog.Name, dog.Breed, dog.AgeInMonths))
             .ToListAsync(cancellationToken);
         return new DogPage(dogs, count);
     }

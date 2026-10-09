@@ -55,3 +55,20 @@ button:focus-visible, a:focus-visible { outline: 3px solid #b1702c; outline-offs
 @media (max-width: 850px) { .hero { gap: 1.5rem; } .dog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 580px) { .dogs-page { padding: 0 1.2rem 2rem; } .hero { grid-template-columns: 1fr; margin: 2rem 0 3rem; } .hero-art { max-width: 360px; width: 100%; margin: auto; } .dog-grid { grid-template-columns: 1fr; } .section-heading { display: block; } .topbar-note { font-size: .7rem; } }
 @media (prefers-reduced-motion: reduce) { article { transition: none; } article:hover { transform: none; } }
+
+.breed-search { display: flex; align-items: center; gap: 1.5rem; padding: 1.4rem 1.6rem; margin: 1.5rem 0; background: #f7f8f2; border: 1px solid #e3e8dc; border-radius: 18px; }
+.search-field { flex: 1; min-width: 0; display: grid; gap: .6rem; }
+.search-field label { font-weight: 650; font-size: .9rem; }
+.search-field input { box-sizing: border-box; width: 100%; padding: .85rem 1rem; background: #fff; border: 1px solid #cdd8c9; border-radius: 10px; color: #253c34; font: inherit; }
+.search-field input::placeholder { color: #6b776b; font-size: .85rem; }
+.search-field > span { font-size: .75rem; color: #647369; }
+.search-actions { display: flex; gap: .65rem; flex-wrap: wrap; }
+.search-actions input { min-height: 44px; border-radius: 10px; padding: .85rem 1.2rem; font: 600 .85rem system-ui, sans-serif; cursor: pointer; }
+.search-submit { background: #284d3b; color: white; border: 1px solid #284d3b; }
+.search-submit:hover:not(:disabled) { background: #1d3d2d; }
+.search-clear { background: transparent; color: #345740; border: 1px solid #cdd8c9; }
+.search-clear:hover:not(:disabled) { background: #e6ecdf; }
+.breed-search input:focus-visible { outline: 3px solid #a96343; outline-offset: 3px; }
+.breed-search input:disabled { opacity: .5; cursor: wait; }
+.active-search { color: #647369; font-size: .85rem; }
+@media(max-width: 650px) { .breed-search { flex-direction: column; align-items: stretch; padding: 1.2rem; gap: 1rem; } .search-actions input { flex: 1; } }
