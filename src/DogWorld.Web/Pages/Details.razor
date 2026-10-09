@@ -1,0 +1,84 @@
+@page "/dogs/{Id:int}"
+@using System.Net
+@using System.Text.Json
+@using DogWorld.Contracts
+@inject HttpClient Http
+@inject ILogger<Details> Logger
+@implements IDisposable
+
+<PageTitle>@(dog is null ? "Dog details | DogWorld" : $"{dog.Name} | DogWorld")</PageTitle>
+<main class="details-page">
+    <a class="back" href="/">← Back to dogs</a>
+    @if (loading)
+    {
+        <PageLoader Message="Loading dog details…" Details="true" />
+    }
+    else if (failed)
+    {
+        <div role="alert"><p>Unable to load dog details. Please try again.</p><button @onclick="LoadAsync">Retry</button></div>
+    }
+    else if (dog is null)
+    {
+        <h1>Dog not found</h1>
+        <p role="status">This dog could not be found. Browse our available dogs instead.</p>
+    }
+    else
+    {
+        <article>
+            <div class="portrait"><img src="@($"images/dog-default-{(dog.Id % 3 + 3) % 3 + 1}.svg")" alt="Default dog illustration, not a photo of @dog.Name" width="600" height="480" /><p>Illustration is a placeholder</p></div>
+            <div class="story">
+                <p class="eyebrow">Meet your companion</p>
+                <span class="badge">@dog.Status</span>
+                <h1>@dog.Name</h1>
+                <dl><div><dt>Breed</dt><dd>@dog.Breed</dd></div><div><dt>Age</dt><dd>@dog.AgeInMonths @(dog.AgeInMonths == 1 ? "month" : "months") old</dd></div></dl>
+                @if (dog.Status == "Adopted") { <p>This dog has already found a home.</p> }
+                <a class="browse" href="/">Explore available dogs →</a>
+            </div>
+        </article>
+    }
+</main>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private DogDetails? dog;
+    private bool loading = true;
+    private bool failed;
+    private CancellationTokenSource? request;
+
+    protected override Task OnParametersSetAsync() => LoadAsync();
+
+    private async Task LoadAsync()
+    {
+        request?.Cancel();
+        request?.Dispose();
+        var current = request = new CancellationTokenSource();
+        var token = current.Token;
+        loading = true;
+        failed = false;
+        dog = null;
+        try
+        {
+            using var response = await Http.GetAsync($"api/dogs/{Id}", token);
+            DogDetails? result = null;
+            if (response.StatusCode != HttpStatusCode.NotFound)
+            {
+                response.EnsureSuccessStatusCode();
+                result = await response.Content.ReadFromJsonAsync<DogDetails>(token)
+                    ?? throw new JsonException("Expected dog details.");
+            }
+            if (!token.IsCancellationRequested) dog = result;
+        }
+        catch (OperationCanceledException) when (token.IsCancellationRequested) { }
+        catch (Exception exception) when (exception is HttpRequestException or JsonException or OperationCanceledException)
+        {
+            if (!token.IsCancellationRequested)
+            {
+                failed = true;
+                Logger.LogError(exception, "Failed to load dog details for {DogId}", Id);
+            }
+        }
+        finally { if (!token.IsCancellationRequested) loading = false; }
+    }
+
+    public void Dispose() { request?.Cancel(); request?.Dispose(); }
+}

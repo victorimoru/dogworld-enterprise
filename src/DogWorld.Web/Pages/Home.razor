@@ -1,0 +1,137 @@
+@page "/"
+@using DogWorld.Contracts
+@using System.Text.Json
+@inject HttpClient Http
+@inject ILogger<Home> Logger
+@implements IDisposable
+
+<PageTitle>DogWorld</PageTitle>
+<main class="dogs-page">
+    <div class="topbar"><a class="brand" href="/">DogWorld<span class="brand-dot">.</span></a><span class="topbar-note">Small paws. Big love.</span></div>
+    <header class="hero">
+        <div class="hero-copy">
+            <p class="eyebrow">A little love changes everything</p>
+            <h1>Your next chapter<br />has <em>four paws.</em></h1>
+            <p class="intro">A new friend. A familiar feeling. Meet the dogs waiting for a place in your heart and your home.</p>
+            <a class="browse-link" href="#available-dogs">Meet the dogs <span aria-hidden="true">↘</span></a>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+            <img src="images/dog-default-1.svg" alt="" width="600" height="480" />
+            <span class="hero-note">Someone wonderful<br />is waiting for you.</span>
+        </div>
+    </header>
+    <div class="section-heading" id="available-dogs"><div><p class="eyebrow">Find your companion</p><h2>Ready for a fresh start</h2></div><span class="image-note">Illustrations are placeholders</span></div>
+    @if (loading)
+    {
+        <PageLoader />
+    }
+    else if (failed)
+    {
+        <div role="alert">
+            <p>Unable to load dogs. Please try again.</p>
+            <button type="button" @onclick="LoadDogsAsync">Retry</button>
+        </div>
+    }
+    else if (dogs.Count == 0)
+    {
+        <p role="status">No dogs available.</p>
+    }
+    else
+    {
+        <p class="count"><span class="status-dot" aria-hidden="true"></span> @totalCount dogs available</p>
+        <section class="dog-grid" aria-label="Available dogs">
+            @foreach (var dog in dogs)
+            {
+                <article @key="dog.Id">
+                    <div class="tile-image">
+                        <a class="image-link" href="@($"dogs/{dog.Id}")" aria-label="View details for @dog.Name">
+                            <img src="@($"images/dog-default-{(dog.Id % 3 + 3) % 3 + 1}.svg")" alt="Default dog illustration, not a photo of @dog.Name" width="600" height="480" loading="lazy" />
+                        </a>
+                        <span class="badge"><span class="status-dot" aria-hidden="true"></span> Available</span>
+                    </div>
+                    <div class="tile-body">
+                        <h2><a href="@($"dogs/{dog.Id}")">@dog.Name</a></h2>
+                        <p class="breed">@dog.Breed</p>
+                        <div class="tile-footer"><p class="age">@dog.AgeInMonths @(dog.AgeInMonths == 1 ? "month" : "months") old</p><span class="heart" aria-hidden="true">♡</span></div>
+                    </div>
+                </article>
+            }
+        </section>
+        @if (TotalPages > 1)
+        {
+            <div class="pagination-panel">
+                <div class="page-summary" aria-live="polite"><strong>More paws to meet</strong><span>Showing @((currentPage - 1) * PageSize + 1)–@((currentPage - 1) * PageSize + dogs.Count) of @totalCount</span></div>
+                <nav class="pagination" aria-label="Dog pagination">
+                    <button class="page-arrow" type="button" aria-label="Previous page" disabled="@(currentPage == 1)" @onclick="() => ChangePage(currentPage - 1)"><span aria-hidden="true">←</span><span class="arrow-label"> Previous</span></button>
+                    <div class="page-numbers">
+                        @for (var number = 1; number <= TotalPages; number++)
+                        {
+                            var pageNumber = number;
+                            <button type="button" class="page-number @(currentPage == pageNumber ? "selected" : "")" aria-label="Go to page @pageNumber" aria-current="@(currentPage == pageNumber ? "page" : null)" @onclick="() => ChangePage(pageNumber)">@pageNumber</button>
+                        }
+                    </div>
+                    <button class="page-arrow" type="button" aria-label="Next page" disabled="@(currentPage == TotalPages)" @onclick="() => ChangePage(currentPage + 1)"><span class="arrow-label">Next </span><span aria-hidden="true">→</span></button>
+                </nav>
+            </div>
+        }
+    }
+</main>
+
+@code {
+
+    private readonly CancellationTokenSource lifetime = new();
+    private List<AvailableDog> dogs = [];
+    private bool loading = true;
+    private bool failed;
+    private const int PageSize = 12;
+    private int currentPage = 1;
+    private int totalCount;
+    private int TotalPages => (int)Math.Ceiling(totalCount / (double)PageSize);
+    private async Task ChangePage(int page)
+    {
+        if (loading) return;
+        currentPage = Math.Clamp(page, 1, Math.Max(1, TotalPages));
+        await LoadDogsAsync();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Logger.LogInformation("Blazor Client: Home page initialization started.");
+        await LoadDogsAsync();
+    }
+
+    private async Task LoadDogsAsync()
+    {
+        loading = true;
+        failed = false;
+        try
+        {
+            using var response = await Http.GetAsync($"api/dogs?page={currentPage}&pageSize={PageSize}", lifetime.Token);
+            response.EnsureSuccessStatusCode();
+            dogs = await response.Content.ReadFromJsonAsync<List<AvailableDog>>(lifetime.Token)
+                ?? throw new JsonException("Expected a dog array.");
+            totalCount = response.Headers.TryGetValues("X-Total-Count", out var values)
+                ? int.Parse(values.Single(), System.Globalization.CultureInfo.InvariantCulture) : dogs.Count;
+            // A deletion/adoption between page requests may remove the final page.
+            if (currentPage > Math.Max(1, TotalPages))
+            {
+                currentPage = Math.Max(1, TotalPages);
+                await LoadDogsAsync();
+            }
+        }
+        catch (OperationCanceledException) when (lifetime.IsCancellationRequested) { }
+        catch (Exception exception) when (exception is HttpRequestException or JsonException or OperationCanceledException)
+        {
+            failed = true;
+            Logger.LogError(exception, "Blazor Client: Failed to fetch available dogs from API.");
+
+        }
+        finally { loading = false; }
+    }
+
+    public void Dispose()
+    {
+        lifetime.Cancel();
+        lifetime.Dispose();
+    }
+}

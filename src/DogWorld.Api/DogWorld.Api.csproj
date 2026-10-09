@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.20">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.20" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
+    <ProjectReference Include="..\DogWorld.Contracts\DogWorld.Contracts.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data/SeedData/dog-names.v1.json" LogicalName="DogWorld.Api.Data.SeedData.dog-names.v1.json" />
+    <EmbeddedResource Include="Data/SeedData/dog-names.legacy.json" LogicalName="DogWorld.Api.Data.SeedData.dog-names.legacy.json" />
+  </ItemGroup>
+
+</Project>

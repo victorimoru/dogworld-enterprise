@@ -1,0 +1,14 @@
+.details-page { max-width: 1100px; margin: auto; padding: 2rem 1.5rem 5rem; color: #253c34; font-family: system-ui, sans-serif; }
+.back { color: #345740; text-decoration: none; display: inline-block; margin-bottom: 2.5rem; }
+article { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center; }
+.portrait img { width: 100%; height: auto; border-radius: 45% 45% 18px 18px; background: #ece6d5; }
+.portrait p { font-size: .75rem; text-align: center; color: #647369; }
+.eyebrow { text-transform: uppercase; letter-spacing: .15em; font-size: .75rem; }
+h1 { font: 500 clamp(2.8rem, 6vw, 4.8rem)/1.1 Georgia, serif; margin: 1rem 0 2rem; }
+.badge { display: inline-block; background: #e6eee4; border-radius: 20px; padding: .5rem 1rem; }
+dl { display: flex; gap: 3rem; padding: 1.5rem 0; border-block: 1px solid #dce3d9; }
+dt { color: #647369; font-size: .8rem; margin-bottom: .5rem; }
+dd { margin: 0; font-weight: 600; }
+.browse, button { display: inline-block; background: #284d3b; color: white; border: 0; border-radius: 9px; padding: 1rem 1.3rem; margin-top: 1rem; text-decoration: none; cursor: pointer; }
+a:focus-visible, button:focus-visible { outline: 3px solid #a96343; outline-offset: 4px; }
+@media(max-width: 650px) { article { grid-template-columns: 1fr; gap: 1rem; } }

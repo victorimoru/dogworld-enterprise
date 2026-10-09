@@ -1,0 +1,352 @@
+[
+  {
+    "Id": 1,
+    "Name": "Bella",
+    "Breed": "Golden Retriever",
+    "AgeInMonths": 14,
+    "Status": "Available"
+  },
+  {
+    "Id": 2,
+    "Name": "Max",
+    "Breed": "German Shepherd",
+    "AgeInMonths": 36,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 3,
+    "Name": "Charlie",
+    "Breed": "French Bulldog",
+    "AgeInMonths": 8,
+    "Status": "Available"
+  },
+  {
+    "Id": 4,
+    "Name": "Luna",
+    "Breed": "Labrador Retriever",
+    "AgeInMonths": 24,
+    "Status": "Available"
+  },
+  {
+    "Id": 5,
+    "Name": "Cooper",
+    "Breed": "Beagle",
+    "AgeInMonths": 18,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 6,
+    "Name": "Daisy",
+    "Breed": "Poodle",
+    "AgeInMonths": 5,
+    "Status": "Available"
+  },
+  {
+    "Id": 7,
+    "Name": "Milo",
+    "Breed": "Rottweiler",
+    "AgeInMonths": 42,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 8,
+    "Name": "Zoe",
+    "Breed": "Yorkshire Terrier",
+    "AgeInMonths": 11,
+    "Status": "Available"
+  },
+  {
+    "Id": 9,
+    "Name": "Rocky",
+    "Breed": "Boxer",
+    "AgeInMonths": 29,
+    "Status": "Available"
+  },
+  {
+    "Id": 10,
+    "Name": "Lola",
+    "Breed": "Dachshund",
+    "AgeInMonths": 7,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 11,
+    "Name": "Bear",
+    "Breed": "Siberian Husky",
+    "AgeInMonths": 31,
+    "Status": "Available"
+  },
+  {
+    "Id": 12,
+    "Name": "Bailey",
+    "Breed": "Great Dane",
+    "AgeInMonths": 22,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 13,
+    "Name": "Tucker",
+    "Breed": "Doberman Pinscher",
+    "AgeInMonths": 16,
+    "Status": "Available"
+  },
+  {
+    "Id": 14,
+    "Name": "Sadie",
+    "Breed": "Australian Shepherd",
+    "AgeInMonths": 9,
+    "Status": "Available"
+  },
+  {
+    "Id": 15,
+    "Name": "Oliver",
+    "Breed": "Shih Tzu",
+    "AgeInMonths": 48,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 16,
+    "Name": "Ruby",
+    "Breed": "Pembroke Welsh Corgi",
+    "AgeInMonths": 13,
+    "Status": "Available"
+  },
+  {
+    "Id": 17,
+    "Name": "Duke",
+    "Breed": "Bernese Mountain Dog",
+    "AgeInMonths": 27,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 18,
+    "Name": "Penny",
+    "Breed": "Cavalier King Charles Spaniel",
+    "AgeInMonths": 6,
+    "Status": "Available"
+  },
+  {
+    "Id": 19,
+    "Name": "Jack",
+    "Breed": "Border Collie",
+    "AgeInMonths": 19,
+    "Status": "Available"
+  },
+  {
+    "Id": 20,
+    "Name": "Chloe",
+    "Breed": "Chihuahua",
+    "AgeInMonths": 38,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 21,
+    "Name": "Buster",
+    "Breed": "Cane Corso",
+    "AgeInMonths": 20,
+    "Status": "Available"
+  },
+  {
+    "Id": 22,
+    "Name": "Stella",
+    "Breed": "Pug",
+    "AgeInMonths": 15,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 23,
+    "Name": "Leo",
+    "Breed": "Maltese",
+    "AgeInMonths": 10,
+    "Status": "Available"
+  },
+  {
+    "Id": 24,
+    "Name": "Lily",
+    "Breed": "Havanese",
+    "AgeInMonths": 4,
+    "Status": "Available"
+  },
+  {
+    "Id": 25,
+    "Name": "Winston",
+    "Breed": "English Bulldog",
+    "AgeInMonths": 33,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 26,
+    "Name": "Murphy",
+    "Breed": "Boston Terrier",
+    "AgeInMonths": 17,
+    "Status": "Available"
+  },
+  {
+    "Id": 27,
+    "Name": "Rosie",
+    "Breed": "Bichon Frise",
+    "AgeInMonths": 25,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 28,
+    "Name": "Finn",
+    "Breed": "Rhodesian Ridgeback",
+    "AgeInMonths": 12,
+    "Status": "Available"
+  },
+  {
+    "Id": 29,
+    "Name": "Scout",
+    "Breed": "Brittany Spaniel",
+    "AgeInMonths": 30,
+    "Status": "Available"
+  },
+  {
+    "Id": 30,
+    "Name": "Maggie",
+    "Breed": "Akita",
+    "AgeInMonths": 40,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 31,
+    "Name": "Gus",
+    "Breed": "Basset Hound",
+    "AgeInMonths": 21,
+    "Status": "Available"
+  },
+  {
+    "Id": 32,
+    "Name": "Nala",
+    "Breed": "Belgian Malinois",
+    "AgeInMonths": 16,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 33,
+    "Name": "Dexter",
+    "Breed": "Weimaraner",
+    "AgeInMonths": 35,
+    "Status": "Available"
+  },
+  {
+    "Id": 34,
+    "Name": "Hazel",
+    "Breed": "Newfoundland",
+    "AgeInMonths": 28,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 35,
+    "Name": "Jax",
+    "Breed": "Bullmastiff",
+    "AgeInMonths": 45,
+    "Status": "Available"
+  },
+  {
+    "Id": 36,
+    "Name": "Sophie",
+    "Breed": "Samoyed",
+    "AgeInMonths": 11,
+    "Status": "Available"
+  },
+  {
+    "Id": 37,
+    "Name": "Bruno",
+    "Breed": "Saint Bernard",
+    "AgeInMonths": 52,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 38,
+    "Name": "Coco",
+    "Breed": "Chow Chow",
+    "AgeInMonths": 23,
+    "Status": "Available"
+  },
+  {
+    "Id": 39,
+    "Name": "Samson",
+    "Breed": "Bloodhound",
+    "AgeInMonths": 34,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 40,
+    "Name": "Maya",
+    "Breed": "Vizsla",
+    "AgeInMonths": 15,
+    "Status": "Available"
+  },
+  {
+    "Id": 41,
+    "Name": "Oscar",
+    "Breed": "West Highland White Terrier",
+    "AgeInMonths": 9,
+    "Status": "Available"
+  },
+  {
+    "Id": 42,
+    "Name": "Piper",
+    "Breed": "Shetland Sheepdog",
+    "AgeInMonths": 26,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 43,
+    "Name": "Diesel",
+    "Breed": "Staffordshire Bull Terrier",
+    "AgeInMonths": 37,
+    "Status": "Available"
+  },
+  {
+    "Id": 44,
+    "Name": "Willow",
+    "Breed": "Papillon",
+    "AgeInMonths": 6,
+    "Status": "Available"
+  },
+  {
+    "Id": 45,
+    "Name": "Kona",
+    "Breed": "Shiba Inu",
+    "AgeInMonths": 18,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 46,
+    "Name": "Rusty",
+    "Breed": "Irish Setter",
+    "AgeInMonths": 29,
+    "Status": "Available"
+  },
+  {
+    "Id": 47,
+    "Name": "Gracie",
+    "Breed": "Whippet",
+    "AgeInMonths": 14,
+    "Status": "Adopted"
+  },
+  {
+    "Id": 48,
+    "Name": "Thor",
+    "Breed": "Alaskan Malamute",
+    "AgeInMonths": 41,
+    "Status": "Available"
+  },
+  {
+    "Id": 49,
+    "Name": "Millie",
+    "Breed": "Miniature Schnauzer",
+    "AgeInMonths": 12,
+    "Status": "Available"
+  },
+  {
+    "Id": 50,
+    "Name": "Hank",
+    "Breed": "Airedale Terrier",
+    "AgeInMonths": 32,
+    "Status": "Adopted"
+  }
+]
