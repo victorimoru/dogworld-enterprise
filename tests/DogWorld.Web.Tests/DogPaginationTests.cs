@@ -10,6 +10,8 @@ namespace DogWorld.Web.Tests;
 
 public class DogPaginationTests : TestContext
 {
+    private static readonly string[] expected = new[] { "?page=1&pageSize=12", "?page=2&pageSize=12", "?page=3&pageSize=12", "?page=1&pageSize=12" };
+
     [Fact]
     public void FetchesTwelveDogsPerPageFromApi()
     {
@@ -29,7 +31,7 @@ public class DogPaginationTests : TestContext
         page.Find("button[aria-label='Go to page 1']").Click();
         Assert.Equal("Dog 1", page.Find("article h2").TextContent);
         Assert.Equal(4, handler.Calls);
-        Assert.Equal(new[] { "?page=1&pageSize=12", "?page=2&pageSize=12", "?page=3&pageSize=12", "?page=1&pageSize=12" }, handler.Queries);
+        Assert.Equal(expected, handler.Queries);
     }
 
     [Theory]
