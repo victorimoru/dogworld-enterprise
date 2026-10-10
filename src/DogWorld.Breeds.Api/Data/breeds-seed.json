@@ -1,0 +1,740 @@
+[
+  {
+    "id": "golden-retriever",
+    "name": "Golden Retriever",
+    "breedGroup": "Sporting",
+    "temperament": "Friendly, Intelligent, Devoted",
+    "lifeExpectancy": "10 - 12 years",
+    "weightRange": "25 - 34 kg",
+    "origin": "Scotland"
+  },
+  {
+    "id": "german-shepherd",
+    "name": "German Shepherd",
+    "breedGroup": "Herding",
+    "temperament": "Confident, Courageous, Smart",
+    "lifeExpectancy": "7 - 10 years",
+    "weightRange": "30 - 40 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "labrador-retriever",
+    "name": "Labrador Retriever",
+    "breedGroup": "Sporting",
+    "temperament": "Outgoing, Even-tempered, Gentle",
+    "lifeExpectancy": "11 - 13 years",
+    "weightRange": "25 - 36 kg",
+    "origin": "Canada"
+  },
+  {
+    "id": "french-bulldog",
+    "name": "French Bulldog",
+    "breedGroup": "Non-Sporting",
+    "temperament": "Playful, Adaptable, Smart",
+    "lifeExpectancy": "10 - 12 years",
+    "weightRange": "8 - 14 kg",
+    "origin": "France"
+  },
+  {
+    "id": "beagle",
+    "name": "Beagle",
+    "breedGroup": "Hound",
+    "temperament": "Curious, Friendly, Merry",
+    "lifeExpectancy": "10 - 15 years",
+    "weightRange": "9 - 11 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "boxer",
+    "name": "Boxer",
+    "breedGroup": "Working",
+    "temperament": "Bright, Fun-Loving, Active",
+    "lifeExpectancy": "10 - 12 years",
+    "weightRange": "25 - 32 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "poodle",
+    "name": "Poodle",
+    "breedGroup": "Non-Sporting",
+    "temperament": "Active, Proud, Very Smart",
+    "lifeExpectancy": "10 - 18 years",
+    "weightRange": "20 - 32 kg",
+    "origin": "France / Germany"
+  },
+  {
+    "id": "rottweiler",
+    "name": "Rottweiler",
+    "breedGroup": "Working",
+    "temperament": "Loyal, Loving, Confident Guardian",
+    "lifeExpectancy": "9 - 10 years",
+    "weightRange": "35 - 60 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "dalmatian",
+    "name": "Dalmatian",
+    "breedGroup": "Non-Sporting",
+    "temperament": "Dignified, Smart, Outgoing",
+    "lifeExpectancy": "11 - 13 years",
+    "weightRange": "20 - 32 kg",
+    "origin": "Croatia"
+  },
+  {
+    "id": "dachshund",
+    "name": "Dachshund",
+    "breedGroup": "Hound",
+    "temperament": "Friendly, Curious, Spunky",
+    "lifeExpectancy": "12 - 16 years",
+    "weightRange": "7 - 15 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "yorkshire-terrier",
+    "name": "Yorkshire Terrier",
+    "breedGroup": "Toy",
+    "temperament": "Spirited, Bold, Confident",
+    "lifeExpectancy": "11 - 15 years",
+    "weightRange": "2 - 3 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "siberian-husky",
+    "name": "Siberian Husky",
+    "breedGroup": "Working",
+    "temperament": "Outgoing, Friendly, Gentle",
+    "lifeExpectancy": "12 - 14 years",
+    "weightRange": "16 - 27 kg",
+    "origin": "Russia"
+  },
+  {
+    "id": "great-dane",
+    "name": "Great Dane",
+    "breedGroup": "Working",
+    "temperament": "Friendly, Patient, Dependable",
+    "lifeExpectancy": "7 - 10 years",
+    "weightRange": "50 - 79 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "doberman-pinscher",
+    "name": "Doberman Pinscher",
+    "breedGroup": "Working",
+    "temperament": "Loyal, Fearless, Alert",
+    "lifeExpectancy": "10 - 12 years",
+    "weightRange": "32 - 45 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "australian-shepherd",
+    "name": "Australian Shepherd",
+    "breedGroup": "Herding",
+    "temperament": "Smart, Work-Oriented, Exuberant",
+    "lifeExpectancy": "12 - 15 years",
+    "weightRange": "16 - 32 kg",
+    "origin": "United States"
+  },
+  {
+    "id": "shih-tzu",
+    "name": "Shih Tzu",
+    "breedGroup": "Toy",
+    "temperament": "Affectionate, Playful, Outgoing",
+    "lifeExpectancy": "10 - 16 years",
+    "weightRange": "4 - 7 kg",
+    "origin": "China"
+  },
+  {
+    "id": "pembroke-welsh-corgi",
+    "name": "Pembroke Welsh Corgi",
+    "breedGroup": "Herding",
+    "temperament": "Affectionate, Smart, Alert",
+    "lifeExpectancy": "12 - 13 years",
+    "weightRange": "11 - 14 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "bernese-mountain-dog",
+    "name": "Bernese Mountain Dog",
+    "breedGroup": "Working",
+    "temperament": "Good-Natured, Calm, Strong",
+    "lifeExpectancy": "7 - 10 years",
+    "weightRange": "36 - 52 kg",
+    "origin": "Switzerland"
+  },
+  {
+    "id": "cavalier-king-charles-spaniel",
+    "name": "Cavalier King Charles Spaniel",
+    "breedGroup": "Toy",
+    "temperament": "Affectionate, Gentle, Graceful",
+    "lifeExpectancy": "12 - 15 years",
+    "weightRange": "5 - 8 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "border-collie",
+    "name": "Border Collie",
+    "breedGroup": "Herding",
+    "temperament": "Tenacious, Keen, Energetic",
+    "lifeExpectancy": "12 - 15 years",
+    "weightRange": "14 - 20 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "chihuahua",
+    "name": "Chihuahua",
+    "breedGroup": "Toy",
+    "temperament": "Charming, Graceful, Sassy",
+    "lifeExpectancy": "14 - 16 years",
+    "weightRange": "1 - 3 kg",
+    "origin": "Mexico"
+  },
+  {
+    "id": "cane-corso",
+    "name": "Cane Corso",
+    "breedGroup": "Working",
+    "temperament": "Affectionate, Intelligent, Majestic",
+    "lifeExpectancy": "9 - 12 years",
+    "weightRange": "40 - 50 kg",
+    "origin": "Italy"
+  },
+  {
+    "id": "maltese",
+    "name": "Maltese",
+    "breedGroup": "Toy",
+    "temperament": "Gentle, Playful, Charming",
+    "lifeExpectancy": "12 - 15 years",
+    "weightRange": "2 - 4 kg",
+    "origin": "Malta"
+  },
+  {
+    "id": "havanese",
+    "name": "Havanese",
+    "breedGroup": "Toy",
+    "temperament": "Intelligent, Outgoing, Funny",
+    "lifeExpectancy": "14 - 16 years",
+    "weightRange": "3 - 6 kg",
+    "origin": "Cuba"
+  },
+  {
+    "id": "boston-terrier",
+    "name": "Boston Terrier",
+    "breedGroup": "Non-Sporting",
+    "temperament": "Friendly, Bright, Amusing",
+    "lifeExpectancy": "11 - 13 years",
+    "weightRange": "5 - 11 kg",
+    "origin": "United States"
+  },
+  {
+    "id": "bichon-frise",
+    "name": "Bichon Frise",
+    "breedGroup": "Non-Sporting",
+    "temperament": "Playful, Peppy, Curious",
+    "lifeExpectancy": "14 - 15 years",
+    "weightRange": "5 - 8 kg",
+    "origin": "France / Belgium"
+  },
+  {
+    "id": "rhodesian-ridgeback",
+    "name": "Rhodesian Ridgeback",
+    "breedGroup": "Hound",
+    "temperament": "Dignified, Loyal, Sensitive",
+    "lifeExpectancy": "10 - 12 years",
+    "weightRange": "32 - 41 kg",
+    "origin": "Zimbabwe"
+  },
+  {
+    "id": "brittany-spaniel",
+    "name": "Brittany Spaniel",
+    "breedGroup": "Sporting",
+    "temperament": "Bright, Fun-Loving, Upbeat",
+    "lifeExpectancy": "12 - 14 years",
+    "weightRange": "14 - 18 kg",
+    "origin": "France"
+  },
+  {
+    "id": "akita",
+    "name": "Akita",
+    "breedGroup": "Working",
+    "temperament": "Courageous, Dignified, Profoundly Loyal",
+    "lifeExpectancy": "10 - 13 years",
+    "weightRange": "32 - 59 kg",
+    "origin": "Japan"
+  },
+  {
+    "id": "basset-hound",
+    "name": "Basset Hound",
+    "breedGroup": "Hound",
+    "temperament": "Gentle, Tenacious, Friendly",
+    "lifeExpectancy": "10 - 12 years",
+    "weightRange": "20 - 29 kg",
+    "origin": "France"
+  },
+  {
+    "id": "belgian-malinois",
+    "name": "Belgian Malinois",
+    "breedGroup": "Herding",
+    "temperament": "Confident, Smart, Hardworking",
+    "lifeExpectancy": "12 - 14 years",
+    "weightRange": "20 - 36 kg",
+    "origin": "Belgium"
+  },
+  {
+    "id": "weimaraner",
+    "name": "Weimaraner",
+    "breedGroup": "Sporting",
+    "temperament": "Friendly, Fearless, Obedient",
+    "lifeExpectancy": "10 - 13 years",
+    "weightRange": "25 - 40 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "newfoundland",
+    "name": "Newfoundland",
+    "breedGroup": "Working",
+    "temperament": "Sweet, Patient, Devoted",
+    "lifeExpectancy": "8 - 10 years",
+    "weightRange": "45 - 68 kg",
+    "origin": "Canada"
+  },
+  {
+    "id": "golden-retriever",
+    "name": "Golden Retriever",
+    "breedGroup": "Sporting",
+    "temperament": "Friendly, Intelligent, Devoted",
+    "lifeExpectancy": "10 - 12 years",
+    "weightRange": "25 - 34 kg",
+    "origin": "Scotland"
+  },
+  {
+    "id": "german-shepherd",
+    "name": "German Shepherd",
+    "breedGroup": "Herding",
+    "temperament": "Confident, Courageous, Smart",
+    "lifeExpectancy": "7 - 10 years",
+    "weightRange": "30 - 40 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "labrador-retriever",
+    "name": "Labrador Retriever",
+    "breedGroup": "Sporting",
+    "temperament": "Outgoing, Even-tempered, Gentle",
+    "lifeExpectancy": "11 - 13 years",
+    "weightRange": "25 - 36 kg",
+    "origin": "Canada"
+  },
+  {
+    "id": "french-bulldog",
+    "name": "French Bulldog",
+    "breedGroup": "Non-Sporting",
+    "temperament": "Playful, Adaptable, Smart",
+    "lifeExpectancy": "10 - 12 years",
+    "weightRange": "8 - 14 kg",
+    "origin": "France"
+  },
+  {
+    "id": "beagle",
+    "name": "Beagle",
+    "breedGroup": "Hound",
+    "temperament": "Curious, Friendly, Merry",
+    "lifeExpectancy": "10 - 15 years",
+    "weightRange": "9 - 11 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "boxer",
+    "name": "Boxer",
+    "breedGroup": "Working",
+    "temperament": "Bright, Fun-Loving, Active",
+    "lifeExpectancy": "10 - 12 years",
+    "weightRange": "25 - 32 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "poodle",
+    "name": "Poodle",
+    "breedGroup": "Non-Sporting",
+    "temperament": "Active, Proud, Very Smart",
+    "lifeExpectancy": "10 - 18 years",
+    "weightRange": "20 - 32 kg",
+    "origin": "France / Germany"
+  },
+  {
+    "id": "rottweiler",
+    "name": "Rottweiler",
+    "breedGroup": "Working",
+    "temperament": "Loyal, Loving, Confident Guardian",
+    "lifeExpectancy": "9 - 10 years",
+    "weightRange": "35 - 60 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "dalmatian",
+    "name": "Dalmatian",
+    "breedGroup": "Non-Sporting",
+    "temperament": "Dignified, Smart, Outgoing",
+    "lifeExpectancy": "11 - 13 years",
+    "weightRange": "20 - 32 kg",
+    "origin": "Croatia"
+  },
+  {
+    "id": "dachshund",
+    "name": "Dachshund",
+    "breedGroup": "Hound",
+    "temperament": "Friendly, Curious, Spunky",
+    "lifeExpectancy": "12 - 16 years",
+    "weightRange": "7 - 15 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "yorkshire-terrier",
+    "name": "Yorkshire Terrier",
+    "breedGroup": "Toy",
+    "temperament": "Spirited, Bold, Confident",
+    "lifeExpectancy": "11 - 15 years",
+    "weightRange": "2 - 3 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "siberian-husky",
+    "name": "Siberian Husky",
+    "breedGroup": "Working",
+    "temperament": "Outgoing, Friendly, Gentle",
+    "lifeExpectancy": "12 - 14 years",
+    "weightRange": "16 - 27 kg",
+    "origin": "Russia"
+  },
+  {
+    "id": "great-dane",
+    "name": "Great Dane",
+    "breedGroup": "Working",
+    "temperament": "Friendly, Patient, Dependable",
+    "lifeExpectancy": "7 - 10 years",
+    "weightRange": "50 - 79 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "doberman-pinscher",
+    "name": "Doberman Pinscher",
+    "breedGroup": "Working",
+    "temperament": "Loyal, Fearless, Alert",
+    "lifeExpectancy": "10 - 12 years",
+    "weightRange": "32 - 45 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "australian-shepherd",
+    "name": "Australian Shepherd",
+    "breedGroup": "Herding",
+    "temperament": "Smart, Work-Oriented, Exuberant",
+    "lifeExpectancy": "12 - 15 years",
+    "weightRange": "16 - 32 kg",
+    "origin": "United States"
+  },
+  {
+    "id": "shih-tzu",
+    "name": "Shih Tzu",
+    "breedGroup": "Toy",
+    "temperament": "Affectionate, Playful, Outgoing",
+    "lifeExpectancy": "10 - 16 years",
+    "weightRange": "4 - 7 kg",
+    "origin": "China"
+  },
+  {
+    "id": "pembroke-welsh-corgi",
+    "name": "Pembroke Welsh Corgi",
+    "breedGroup": "Herding",
+    "temperament": "Affectionate, Smart, Alert",
+    "lifeExpectancy": "12 - 13 years",
+    "weightRange": "11 - 14 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "bernese-mountain-dog",
+    "name": "Bernese Mountain Dog",
+    "breedGroup": "Working",
+    "temperament": "Good-Natured, Calm, Strong",
+    "lifeExpectancy": "7 - 10 years",
+    "weightRange": "36 - 52 kg",
+    "origin": "Switzerland"
+  },
+  {
+    "id": "cavalier-king-charles-spaniel",
+    "name": "Cavalier King Charles Spaniel",
+    "breedGroup": "Toy",
+    "temperament": "Affectionate, Gentle, Graceful",
+    "lifeExpectancy": "12 - 15 years",
+    "weightRange": "5 - 8 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "border-collie",
+    "name": "Border Collie",
+    "breedGroup": "Herding",
+    "temperament": "Tenacious, Keen, Energetic",
+    "lifeExpectancy": "12 - 15 years",
+    "weightRange": "14 - 20 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "chihuahua",
+    "name": "Chihuahua",
+    "breedGroup": "Toy",
+    "temperament": "Charming, Graceful, Sassy",
+    "lifeExpectancy": "14 - 16 years",
+    "weightRange": "1 - 3 kg",
+    "origin": "Mexico"
+  },
+  {
+    "id": "cane-corso",
+    "name": "Cane Corso",
+    "breedGroup": "Working",
+    "temperament": "Affectionate, Intelligent, Majestic",
+    "lifeExpectancy": "9 - 12 years",
+    "weightRange": "40 - 50 kg",
+    "origin": "Italy"
+  },
+  {
+    "id": "maltese",
+    "name": "Maltese",
+    "breedGroup": "Toy",
+    "temperament": "Gentle, Playful, Charming",
+    "lifeExpectancy": "12 - 15 years",
+    "weightRange": "2 - 4 kg",
+    "origin": "Malta"
+  },
+  {
+    "id": "havanese",
+    "name": "Havanese",
+    "breedGroup": "Toy",
+    "temperament": "Intelligent, Outgoing, Funny",
+    "lifeExpectancy": "14 - 16 years",
+    "weightRange": "3 - 6 kg",
+    "origin": "Cuba"
+  },
+  {
+    "id": "boston-terrier",
+    "name": "Boston Terrier",
+    "breedGroup": "Non-Sporting",
+    "temperament": "Friendly, Bright, Amusing",
+    "lifeExpectancy": "11 - 13 years",
+    "weightRange": "5 - 11 kg",
+    "origin": "United States"
+  },
+  {
+    "id": "bichon-frise",
+    "name": "Bichon Frise",
+    "breedGroup": "Non-Sporting",
+    "temperament": "Playful, Peppy, Curious",
+    "lifeExpectancy": "14 - 15 years",
+    "weightRange": "5 - 8 kg",
+    "origin": "France / Belgium"
+  },
+  {
+    "id": "rhodesian-ridgeback",
+    "name": "Rhodesian Ridgeback",
+    "breedGroup": "Hound",
+    "temperament": "Dignified, Loyal, Sensitive",
+    "lifeExpectancy": "10 - 12 years",
+    "weightRange": "32 - 41 kg",
+    "origin": "Zimbabwe"
+  },
+  {
+    "id": "brittany-spaniel",
+    "name": "Brittany Spaniel",
+    "breedGroup": "Sporting",
+    "temperament": "Bright, Fun-Loving, Upbeat",
+    "lifeExpectancy": "12 - 14 years",
+    "weightRange": "14 - 18 kg",
+    "origin": "France"
+  },
+  {
+    "id": "akita",
+    "name": "Akita",
+    "breedGroup": "Working",
+    "temperament": "Courageous, Dignified, Profoundly Loyal",
+    "lifeExpectancy": "10 - 13 years",
+    "weightRange": "32 - 59 kg",
+    "origin": "Japan"
+  },
+  {
+    "id": "basset-hound",
+    "name": "Basset Hound",
+    "breedGroup": "Hound",
+    "temperament": "Gentle, Tenacious, Friendly",
+    "lifeExpectancy": "10 - 12 years",
+    "weightRange": "20 - 29 kg",
+    "origin": "France"
+  },
+  {
+    "id": "belgian-malinois",
+    "name": "Belgian Malinois",
+    "breedGroup": "Herding",
+    "temperament": "Confident, Smart, Hardworking",
+    "lifeExpectancy": "12 - 14 years",
+    "weightRange": "20 - 36 kg",
+    "origin": "Belgium"
+  },
+  {
+    "id": "weimaraner",
+    "name": "Weimaraner",
+    "breedGroup": "Sporting",
+    "temperament": "Friendly, Fearless, Obedient",
+    "lifeExpectancy": "10 - 13 years",
+    "weightRange": "25 - 40 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "newfoundland",
+    "name": "Newfoundland",
+    "breedGroup": "Working",
+    "temperament": "Sweet, Patient, Devoted",
+    "lifeExpectancy": "8 - 10 years",
+    "weightRange": "45 - 68 kg",
+    "origin": "Canada"
+  },
+  {
+    "id": "bullmastiff",
+    "name": "Bullmastiff",
+    "breedGroup": "Working",
+    "temperament": "Affectionate, Loyal, Brave",
+    "lifeExpectancy": "7 - 9 years",
+    "weightRange": "45 - 59 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "samoyed",
+    "name": "Samoyed",
+    "breedGroup": "Working",
+    "temperament": "Adaptable, Friendly, Gentle",
+    "lifeExpectancy": "12 - 14 years",
+    "weightRange": "23 - 30 kg",
+    "origin": "Russia"
+  },
+  {
+    "id": "saint-bernard",
+    "name": "Saint Bernard",
+    "breedGroup": "Working",
+    "temperament": "Playful, Charming, Inquisitive",
+    "lifeExpectancy": "8 - 10 years",
+    "weightRange": "54 - 82 kg",
+    "origin": "Switzerland"
+  },
+  {
+    "id": "chow-chow",
+    "name": "Chow Chow",
+    "breedGroup": "Non-Sporting",
+    "temperament": "Dignified, Bright, Serious-Minded",
+    "lifeExpectancy": "8 - 12 years",
+    "weightRange": "20 - 32 kg",
+    "origin": "China"
+  },
+  {
+    "id": "bloodhound",
+    "name": "Bloodhound",
+    "breedGroup": "Hound",
+    "temperament": "Friendly, Independent, Inquisitive",
+    "lifeExpectancy": "10 - 12 years",
+    "weightRange": "36 - 50 kg",
+    "origin": "Belgium / France"
+  },
+  {
+    "id": "vizsla",
+    "name": "Vizsla",
+    "breedGroup": "Sporting",
+    "temperament": "Affectionate, Energetic, Gentle",
+    "lifeExpectancy": "12 - 14 years",
+    "weightRange": "20 - 30 kg",
+    "origin": "Hungary"
+  },
+  {
+    "id": "west-highland-white-terrier",
+    "name": "West Highland White Terrier",
+    "breedGroup": "Terrier",
+    "temperament": "Loyal, Happy, Entertaining",
+    "lifeExpectancy": "13 - 15 years",
+    "weightRange": "7 - 10 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "shetland-sheepdog",
+    "name": "Shetland Sheepdog",
+    "breedGroup": "Herding",
+    "temperament": "Playful, Energetic, Bright",
+    "lifeExpectancy": "12 - 14 years",
+    "weightRange": "7 - 11 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "staffordshire-bull-terrier",
+    "name": "Staffordshire Bull Terrier",
+    "breedGroup": "Terrier",
+    "temperament": "Courageous, Intelligent, Loyal",
+    "lifeExpectancy": "12 - 14 years",
+    "weightRange": "11 - 17 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "papillon",
+    "name": "Papillon",
+    "breedGroup": "Toy",
+    "temperament": "Alert, Friendly, Energetic",
+    "lifeExpectancy": "14 - 16 years",
+    "weightRange": "2 - 5 kg",
+    "origin": "France / Belgium"
+  },
+  {
+    "id": "shiba-inu",
+    "name": "Shiba Inu",
+    "breedGroup": "Non-Sporting",
+    "temperament": "Alert, Active, Attentive",
+    "lifeExpectancy": "13 - 16 years",
+    "weightRange": "8 - 11 kg",
+    "origin": "Japan"
+  },
+  {
+    "id": "irish-setter",
+    "name": "Irish Setter",
+    "breedGroup": "Sporting",
+    "temperament": "Active, Outgoing, Sweet-Natured",
+    "lifeExpectancy": "12 - 15 years",
+    "weightRange": "27 - 32 kg",
+    "origin": "Ireland"
+  },
+  {
+    "id": "whippet",
+    "name": "Whippet",
+    "breedGroup": "Hound",
+    "temperament": "Affectionate, Playful, Calm",
+    "lifeExpectancy": "12 - 15 years",
+    "weightRange": "11 - 18 kg",
+    "origin": "United Kingdom"
+  },
+  {
+    "id": "alaskan-malamute",
+    "name": "Alaskan Malamute",
+    "breedGroup": "Working",
+    "temperament": "Affectionate, Loyal, Playful",
+    "lifeExpectancy": "10 - 14 years",
+    "weightRange": "34 - 39 kg",
+    "origin": "United States"
+  },
+  {
+    "id": "miniature-schnauzer",
+    "name": "Miniature Schnauzer",
+    "breedGroup": "Terrier",
+    "temperament": "Friendly, Smart, Obedient",
+    "lifeExpectancy": "12 - 15 years",
+    "weightRange": "5 - 9 kg",
+    "origin": "Germany"
+  },
+  {
+    "id": "airedale-terrier",
+    "name": "Airedale Terrier",
+    "breedGroup": "Terrier",
+    "temperament": "Outgoing, Friendly, Confident",
+    "lifeExpectancy": "11 - 14 years",
+    "weightRange": "19 - 25 kg",
+    "origin": "United Kingdom"
+  }
+]
