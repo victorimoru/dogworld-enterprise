@@ -31,6 +31,18 @@ builder.Services.AddScoped<IDogPageRepository, DogRepository>();
 builder.Services.AddScoped<DogPageService>();
 builder.Services.AddScoped<IDogDetailsRepository, DogRepository>();
 builder.Services.AddScoped<DogDetailsService>();
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton(DogWorld.Api.Resilience.BreedsApiResiliencePolicy.Create());
+builder.Services.AddHttpClient<DogWorld.Api.Clients.BreedsApiClient>(http =>
+{
+    http.BaseAddress = new Uri(builder.Configuration["BreedsApi:BaseUrl"]
+        ?? throw new InvalidOperationException("Configure BreedsApi:BaseUrl before using the breed client."));
+    http.Timeout = Timeout.InfiniteTimeSpan; // Polly owns the total request timeout.
+});
+builder.Services.AddTransient<DogWorld.Api.Clients.IBreedsApiClient>(services =>
+    new DogWorld.Api.Clients.CachedBreedsApiClient(
+        services.GetRequiredService<DogWorld.Api.Clients.BreedsApiClient>(),
+        services.GetRequiredService<Microsoft.Extensions.Caching.Memory.IMemoryCache>()));
 builder.Services.AddControllers();
 builder.Services.AddCors(options => options.AddPolicy("WebClient", policy =>
 {

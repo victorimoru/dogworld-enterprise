@@ -49,7 +49,6 @@ public class BreedService : IBreedService
             }
         }
 
-        // Fallback to local file if manifest stream is not found
         var fallbackPath = Path.Combine(AppContext.BaseDirectory, "Data", "breeds-seed.json");
         if (File.Exists(fallbackPath))
         {
@@ -61,6 +60,6 @@ public class BreedService : IBreedService
             }
         }
 
-        return Array.Empty<BreedProfileResponse>();
+        return [];
     }
 }
