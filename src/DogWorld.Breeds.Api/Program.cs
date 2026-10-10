@@ -1,6 +1,3 @@
-using DogWorld.Breeds.Api.Services;
-using OpenTelemetry.Resources;
-
 var builder = WebApplication.CreateBuilder(args);
 
 var telemetryConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]
