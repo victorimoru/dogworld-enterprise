@@ -9,7 +9,7 @@ namespace DogWorld.Api.Controllers;
 public class DogsController(DogService service) : ControllerBase
 {
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<DogWorld.Contracts.DogDetails>> GetDogDetails(
+    public async Task<ActionResult<Contracts.DogDetails>> GetDogDetails(
         int id, [FromServices] DogDetailsService details, CancellationToken cancellationToken)
     {
         var dog = await details.GetByIdAsync(id, cancellationToken);

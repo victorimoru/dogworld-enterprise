@@ -35,6 +35,25 @@
                 <a class="browse" href="/">Explore available dogs →</a>
             </div>
         </article>
+        <section class="breed-profile" aria-label="Breed information">
+            <p class="eyebrow">A little more to know</p>
+            <h2>About the breed</h2>
+            @if (dog.BreedDetails is { } breed)
+            {
+                <p class="breed-intro">@breed.Name <span>· @breed.BreedGroup</span></p>
+                <p class="temperament">@breed.Temperament</p>
+                <dl class="breed-facts">
+                    <div><dt>Life expectancy</dt><dd>@breed.LifeExpectancy</dd></div>
+                    <div><dt>Typical weight</dt><dd>@breed.WeightRange</dd></div>
+                    <div><dt>Origin</dt><dd>@breed.Origin</dd></div>
+                </dl>
+                <p class="breed-note">General breed information. Every dog has their own personality and needs.</p>
+            }
+            else
+            {
+                <p class="breed-unavailable">Breed information is currently unavailable. You can still view this dog's details above.</p>
+            }
+        </section>
     }
 </main>
 

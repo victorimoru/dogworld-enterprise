@@ -17,6 +17,7 @@ public sealed class BreedsApiClient(HttpClient http, ResiliencePipeline<HttpResp
 
         // GetAsync buffers the body inside the total timeout. Each retry creates a new request.
         // HttpClient's diagnostics handler propagates the current W3C trace context.
+
         using var response = await resilience.ExecuteAsync(
             async token => await http.GetAsync(path, token), cancellationToken);
 

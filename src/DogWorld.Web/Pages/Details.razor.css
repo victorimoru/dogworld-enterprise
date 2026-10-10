@@ -12,3 +12,13 @@ dd { margin: 0; font-weight: 600; }
 .browse, button { display: inline-block; background: #284d3b; color: white; border: 0; border-radius: 9px; padding: 1rem 1.3rem; margin-top: 1rem; text-decoration: none; cursor: pointer; }
 a:focus-visible, button:focus-visible { outline: 3px solid #a96343; outline-offset: 4px; }
 @media(max-width: 650px) { article { grid-template-columns: 1fr; gap: 1rem; } }
+
+.breed-profile { margin-top: 3rem; padding: 2rem; background: #f7f8f2; border: 1px solid #e3e8dc; border-radius: 20px; }
+.breed-profile h2 { font: 500 2rem Georgia, serif; margin: .6rem 0 1.4rem; }
+.breed-intro { font-weight: 650; }
+.breed-intro span { font-weight: 400; color: #647369; }
+.temperament { line-height: 1.7; }
+.breed-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+.breed-note, .breed-unavailable { color: #647369; line-height: 1.7; }
+.breed-note { font-size: .8rem; }
+@media(max-width: 650px) { .breed-profile { padding: 1.3rem; } .breed-facts { grid-template-columns: 1fr; } }
