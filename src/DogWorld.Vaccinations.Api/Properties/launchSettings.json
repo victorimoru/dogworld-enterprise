@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "DogWorld.Vaccinations.Api": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:57439;http://localhost:57440"
+    }
+  }
+}

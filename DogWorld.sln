@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -22,6 +22,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogWorld.Breeds.Api", "src\DogWorld.Breeds.Api\DogWorld.Breeds.Api.csproj", "{8AB7BD99-44B3-42CD-8210-094E8D642143}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogWorld.Breeds.Api.Tests", "tests\DogWorld.Breeds.Api.Tests\DogWorld.Breeds.Api.Tests.csproj", "{CF229E85-AA22-40ED-9BCD-1C57A152094A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogWorld.Vaccinations.Api", "src\DogWorld.Vaccinations.Api\DogWorld.Vaccinations.Api.csproj", "{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DogWorld.Vaccinations.Api.Tests", "tests\DogWorld.Vaccinations.Api.Tests\DogWorld.Vaccinations.Api.Tests.csproj", "{A72A0ED0-E500-494D-A128-996D067A8803}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +133,30 @@ Global
 		{CF229E85-AA22-40ED-9BCD-1C57A152094A}.Release|x64.Build.0 = Release|Any CPU
 		{CF229E85-AA22-40ED-9BCD-1C57A152094A}.Release|x86.ActiveCfg = Release|Any CPU
 		{CF229E85-AA22-40ED-9BCD-1C57A152094A}.Release|x86.Build.0 = Release|Any CPU
+		{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E}.Debug|x64.Build.0 = Debug|Any CPU
+		{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E}.Debug|x86.Build.0 = Debug|Any CPU
+		{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E}.Release|x64.ActiveCfg = Release|Any CPU
+		{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E}.Release|x64.Build.0 = Release|Any CPU
+		{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E}.Release|x86.ActiveCfg = Release|Any CPU
+		{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E}.Release|x86.Build.0 = Release|Any CPU
+		{A72A0ED0-E500-494D-A128-996D067A8803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A72A0ED0-E500-494D-A128-996D067A8803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A72A0ED0-E500-494D-A128-996D067A8803}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A72A0ED0-E500-494D-A128-996D067A8803}.Debug|x64.Build.0 = Debug|Any CPU
+		{A72A0ED0-E500-494D-A128-996D067A8803}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A72A0ED0-E500-494D-A128-996D067A8803}.Debug|x86.Build.0 = Debug|Any CPU
+		{A72A0ED0-E500-494D-A128-996D067A8803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A72A0ED0-E500-494D-A128-996D067A8803}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A72A0ED0-E500-494D-A128-996D067A8803}.Release|x64.ActiveCfg = Release|Any CPU
+		{A72A0ED0-E500-494D-A128-996D067A8803}.Release|x64.Build.0 = Release|Any CPU
+		{A72A0ED0-E500-494D-A128-996D067A8803}.Release|x86.ActiveCfg = Release|Any CPU
+		{A72A0ED0-E500-494D-A128-996D067A8803}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,5 +170,7 @@ Global
 		{E922D0C9-1988-4304-BBFF-723E13DB085C} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{8AB7BD99-44B3-42CD-8210-094E8D642143} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{CF229E85-AA22-40ED-9BCD-1C57A152094A} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{2E8C8CCD-5D2B-4200-B2D1-06F01E611A3E} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{A72A0ED0-E500-494D-A128-996D067A8803} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal
