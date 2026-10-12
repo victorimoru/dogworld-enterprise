@@ -14,7 +14,7 @@ public class DogDetailsServiceTests
     {
         using var cancellation = new CancellationTokenSource();
         var repository = new Stub();
-        var result = await new DogDetailsService(repository, new MissingBreedClient(), NullLogger<DogDetailsService>.Instance).GetByIdAsync(7, cancellation.Token);
+        var result = await new DogDetailsService(repository, new MissingBreedClient(), NullLogger<DogDetailsService>.Instance, new EmptyVaccinationsClient()).GetByIdAsync(7, cancellation.Token);
         Assert.NotNull(result);
         Assert.Equal(7, repository.Id);
         Assert.Equal(cancellation.Token, repository.Token);
@@ -25,7 +25,7 @@ public class DogDetailsServiceTests
     [Fact]
     public async Task MissingDogReturnsNull()
     {
-        Assert.Null(await new DogDetailsService(new Stub { Missing = true }, new MissingBreedClient(), NullLogger<DogDetailsService>.Instance).GetByIdAsync(5, default));
+        Assert.Null(await new DogDetailsService(new Stub { Missing = true }, new MissingBreedClient(), NullLogger<DogDetailsService>.Instance, new EmptyVaccinationsClient()).GetByIdAsync(5, default));
     }
 
     private sealed class MissingBreedClient : IBreedsApiClient

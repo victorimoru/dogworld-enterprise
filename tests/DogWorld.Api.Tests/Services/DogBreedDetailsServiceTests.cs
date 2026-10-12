@@ -28,7 +28,7 @@ public class DogDetailsEnrichmentTests
     {
         var client = new Client();
         var service = new DogDetailsService(new Repository { Missing = true }, client,
-            NullLogger<DogDetailsService>.Instance);
+            NullLogger<DogDetailsService>.Instance, new EmptyVaccinationsClient());
         Assert.Null(await service.GetByIdAsync(99, default));
         Assert.Equal(0, client.Calls);
     }
@@ -69,7 +69,7 @@ public class DogDetailsEnrichmentTests
     }
 
     private static DogDetailsService Service(Client client) =>
-        new(new Repository(), client, NullLogger<DogDetailsService>.Instance);
+        new(new Repository(), client, NullLogger<DogDetailsService>.Instance, new EmptyVaccinationsClient());
     private sealed class Repository : IDogDetailsRepository
     {
         public bool Missing { get; init; }

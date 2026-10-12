@@ -54,10 +54,63 @@
                 <p class="breed-unavailable">Breed information is currently unavailable. You can still view this dog's details above.</p>
             }
         </section>
+        <section class="vaccination-history" aria-label="Vaccination history">
+            <header class="health-heading">
+                <div class="health-title">
+                    <span class="health-icon" aria-hidden="true">✚</span>
+                    <div><p class="eyebrow">Care &amp; wellbeing</p><h2>Vaccination history</h2></div>
+                </div>
+                @if (dog.Vaccinations is { } history)
+                {
+                    <span class="record-count">@history.Count @(history.Count == 1 ? "record" : "records")</span>
+                }
+            </header>
+            @if (dog.Vaccinations is null)
+            {
+                <div class="health-empty" role="status">
+                    <h3>Vaccination history is currently unavailable</h3>
+                    <p>We couldn't retrieve these records. You can still explore @dog.Name's details.</p>
+                    <button class="health-retry" @onclick="LoadAsync">Try again <span aria-hidden="true">↻</span></button>
+                </div>
+            }
+            else if (dog.Vaccinations.Count == 0)
+            {
+                <div class="health-empty">
+                    <h3>No vaccination records yet</h3>
+                    <p>No history has been recorded here for @dog.Name. This doesn't mean they haven't been vaccinated.</p>
+                </div>
+            }
+            else
+            {
+                <p class="health-intro">A little history of @dog.Name's care, with the latest records first.</p>
+                <ol class="vaccine-list">
+                    @foreach (var record in dog.Vaccinations.OrderByDescending(v => v.AdministeredOn).ThenBy(v => v.Id))
+                    {
+                        <li class="vaccine-card" @key="record.Id">
+                            <span class="timeline-dot" aria-hidden="true"></span>
+                            <div class="vaccine-name"><span class="record-label">Vaccination record</span><h3>@record.VaccineName</h3></div>
+                            <dl class="vaccine-dates">
+                                <div><dt>Administered</dt><dd><time datetime="@IsoDate(record.AdministeredOn)">@DisplayDate(record.AdministeredOn)</time></dd></div>
+                                <div><dt>Next due (recorded)</dt><dd>
+                                    @if (record.NextDueOn is { } nextDue)
+                                    {
+                                        <time datetime="@IsoDate(nextDue)">@DisplayDate(nextDue)</time>
+                                    }
+                                    else { <span class="date-missing">Not recorded</span> }
+                                </dd></div>
+                            </dl>
+                        </li>
+                    }
+                </ol>
+            }
+            <p class="health-note">Recorded history only. Ask the shelter or a veterinarian to confirm current vaccination needs.</p>
+        </section>
     }
 </main>
 
 @code {
+    private static string IsoDate(DateOnly date) => date.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+    private static string DisplayDate(DateOnly date) => date.ToString("dd MMM yyyy", System.Globalization.CultureInfo.InvariantCulture);
     [Parameter] public int Id { get; set; }
     private DogDetails? dog;
     private bool loading = true;

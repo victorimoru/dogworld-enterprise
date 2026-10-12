@@ -43,6 +43,12 @@ builder.Services.AddTransient<DogWorld.Api.Clients.IBreedsApiClient>(services =>
     new DogWorld.Api.Clients.CachedBreedsApiClient(
         services.GetRequiredService<DogWorld.Api.Clients.BreedsApiClient>(),
         services.GetRequiredService<Microsoft.Extensions.Caching.Memory.IMemoryCache>()));
+builder.Services.AddHttpClient<DogWorld.Api.Clients.IVaccinationsApiClient, DogWorld.Api.Clients.VaccinationsApiClient>(http =>
+{
+    http.BaseAddress = new Uri(builder.Configuration["VaccinationsApi:BaseUrl"]
+        ?? throw new InvalidOperationException("Configure VaccinationsApi:BaseUrl before using the vaccination client."));
+    http.Timeout = Timeout.InfiniteTimeSpan;
+});
 builder.Services.AddControllers();
 builder.Services.AddCors(options => options.AddPolicy("WebClient", policy =>
 {

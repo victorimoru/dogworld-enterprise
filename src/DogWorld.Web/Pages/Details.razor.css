@@ -1,24 +1,333 @@
-.details-page { max-width: 1100px; margin: auto; padding: 2rem 1.5rem 5rem; color: #253c34; font-family: system-ui, sans-serif; }
-.back { color: #345740; text-decoration: none; display: inline-block; margin-bottom: 2.5rem; }
-article { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center; }
-.portrait img { width: 100%; height: auto; border-radius: 45% 45% 18px 18px; background: #ece6d5; }
-.portrait p { font-size: .75rem; text-align: center; color: #647369; }
-.eyebrow { text-transform: uppercase; letter-spacing: .15em; font-size: .75rem; }
-h1 { font: 500 clamp(2.8rem, 6vw, 4.8rem)/1.1 Georgia, serif; margin: 1rem 0 2rem; }
-.badge { display: inline-block; background: #e6eee4; border-radius: 20px; padding: .5rem 1rem; }
-dl { display: flex; gap: 3rem; padding: 1.5rem 0; border-block: 1px solid #dce3d9; }
-dt { color: #647369; font-size: .8rem; margin-bottom: .5rem; }
-dd { margin: 0; font-weight: 600; }
-.browse, button { display: inline-block; background: #284d3b; color: white; border: 0; border-radius: 9px; padding: 1rem 1.3rem; margin-top: 1rem; text-decoration: none; cursor: pointer; }
-a:focus-visible, button:focus-visible { outline: 3px solid #a96343; outline-offset: 4px; }
-@media(max-width: 650px) { article { grid-template-columns: 1fr; gap: 1rem; } }
+.details-page {
+    max-width: 1100px;
+    margin: auto;
+    padding: 2rem 1.5rem 5rem;
+    color: #253c34;
+    font-family: system-ui, sans-serif;
+}
 
-.breed-profile { margin-top: 3rem; padding: 2rem; background: #f7f8f2; border: 1px solid #e3e8dc; border-radius: 20px; }
-.breed-profile h2 { font: 500 2rem Georgia, serif; margin: .6rem 0 1.4rem; }
-.breed-intro { font-weight: 650; }
-.breed-intro span { font-weight: 400; color: #647369; }
-.temperament { line-height: 1.7; }
-.breed-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
-.breed-note, .breed-unavailable { color: #647369; line-height: 1.7; }
-.breed-note { font-size: .8rem; }
-@media(max-width: 650px) { .breed-profile { padding: 1.3rem; } .breed-facts { grid-template-columns: 1fr; } }
+.back {
+    color: #345740;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 2.5rem;
+}
+
+article {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.portrait img {
+    width: 100%;
+    height: auto;
+    border-radius: 45% 45% 18px 18px;
+    background: #ece6d5;
+}
+
+.portrait p {
+    font-size: .75rem;
+    text-align: center;
+    color: #647369;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    font-size: .75rem;
+}
+
+h1 {
+    font: 500 clamp(2.8rem, 6vw, 4.8rem)/1.1 Georgia, serif;
+    margin: 1rem 0 2rem;
+}
+
+.badge {
+    display: inline-block;
+    background: #e6eee4;
+    border-radius: 20px;
+    padding: .5rem 1rem;
+}
+
+dl {
+    display: flex;
+    gap: 3rem;
+    padding: 1.5rem 0;
+    border-block: 1px solid #dce3d9;
+}
+
+dt {
+    color: #647369;
+    font-size: .8rem;
+    margin-bottom: .5rem;
+}
+
+dd {
+    margin: 0;
+    font-weight: 600;
+}
+
+.browse, button {
+    display: inline-block;
+    background: #284d3b;
+    color: white;
+    border: 0;
+    border-radius: 9px;
+    padding: 1rem 1.3rem;
+    margin-top: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    a:focus-visible, button:focus-visible {
+        outline: 3px solid #a96343;
+        outline-offset: 4px;
+    }
+
+@media(max-width: 650px) {
+    article {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+.breed-profile {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: #f7f8f2;
+    border: 1px solid #e3e8dc;
+    border-radius: 20px;
+}
+
+    .breed-profile h2 {
+        font: 500 2rem Georgia, serif;
+        margin: .6rem 0 1.4rem;
+    }
+
+.breed-intro {
+    font-weight: 650;
+}
+
+    .breed-intro span {
+        font-weight: 400;
+        color: #647369;
+    }
+
+.temperament {
+    line-height: 1.7;
+}
+
+.breed-facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+}
+
+.breed-note, .breed-unavailable {
+    color: #647369;
+    line-height: 1.7;
+}
+
+.breed-note {
+    font-size: .8rem;
+}
+
+@media(max-width: 650px) {
+    .breed-profile {
+        padding: 1.3rem;
+    }
+
+    .breed-facts {
+        grid-template-columns: 1fr;
+    }
+}
+
+.vaccination-history {
+    margin-top: 2rem;
+    padding: 2rem;
+    border: 1px solid #dce5de;
+    border-radius: 24px;
+    background: linear-gradient(140deg, #f1f6ef, #fffdf8 70%);
+    box-shadow: 0 12px 36px #253c3408;
+}
+
+.health-heading, .health-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.health-heading {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 1.4rem;
+}
+
+.health-icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    border-radius: 17px;
+    color: #35604b;
+    background: #dfebdf;
+    font-size: 1.5rem;
+}
+
+.health-title .eyebrow {
+    margin: 0 0 .4rem;
+    color: #566e5c;
+}
+
+.health-title h2 {
+    font: 500 clamp(1.6rem, 4vw, 2rem) Georgia, serif;
+    margin: 0;
+}
+
+.record-count {
+    padding: .45rem .85rem;
+    border: 1px solid #cddccc;
+    border-radius: 30px;
+    color: #345740;
+    background: #f9fcf6;
+    font-size: .8rem;
+    white-space: nowrap;
+}
+
+.health-intro, .health-empty p {
+    color: #52685c;
+    line-height: 1.7;
+}
+
+.vaccine-list {
+    list-style: none;
+    padding: 0 0 0 1.3rem;
+    margin: 1.8rem 0;
+    border-left: 2px solid #d2dfd0;
+}
+
+.vaccine-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.3rem 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e0e6dd;
+    border-radius: 16px;
+    background: #fff;
+}
+
+    .vaccine-card:last-child {
+        margin-bottom: 0;
+    }
+
+.timeline-dot {
+    position: absolute;
+    top: 1.65rem;
+    left: -1.72rem;
+    width: 10px;
+    height: 10px;
+    border: 3px solid #f1f6ef;
+    border-radius: 50%;
+    background: #52795c;
+}
+
+.record-label {
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: #637768;
+}
+
+.vaccine-name h3 {
+    margin: .5rem 0 0;
+    font-size: 1.08rem;
+    font-weight: 650;
+    overflow-wrap: anywhere;
+}
+
+.vaccine-dates {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    gap: 1rem;
+}
+
+    .vaccine-dates dt {
+        font-size: .75rem;
+    }
+
+    .vaccine-dates dd {
+        font-size: .9rem;
+    }
+
+.date-missing {
+    color: #657367;
+    font-weight: 400;
+}
+
+.health-note {
+    border-top: 1px solid #dce5d9;
+    padding-top: 1.2rem;
+    margin: 0;
+    font-size: .8rem;
+    line-height: 1.7;
+    color: #5d6e61;
+}
+
+.health-empty {
+    background: #ffffffb3;
+    border: 1px dashed #c8d7c8;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+    .health-empty h3 {
+        margin: 0;
+        font-size: 1.05rem;
+    }
+
+    .health-empty p {
+        margin-bottom: 0;
+    }
+
+.health-retry {
+    font-size: .85rem;
+    padding: .7rem 1rem;
+}
+
+@media(max-width: 650px) {
+    .vaccination-history {
+        padding: 1.3rem;
+    }
+
+    .vaccine-card {
+        grid-template-columns: 1fr;
+        padding: 1.1rem;
+        gap: 1.2rem;
+    }
+
+    .vaccine-dates {
+        gap: .7rem;
+    }
+
+    .health-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 13px;
+    }
+}
+
+@media(max-width: 360px) {
+    .vaccine-dates {
+        grid-template-columns: 1fr;
+    }
+}

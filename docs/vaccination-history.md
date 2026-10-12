@@ -68,3 +68,21 @@ The connection-string override must be removed before running the development AP
 
 Writes, authentication, deployment, and clinical recommendations remain outside
 this increment.
+
+## Dog details and Blazor integration
+
+GET /api/dogs/{id} now includes a nullable vaccinations array. An empty array means
+no recorded history; null means the downstream service could not provide it.
+Dog existence is checked first. Breed and vaccination requests then run in parallel,
+with failures handled independently and caller cancellation preserved.
+
+The typed vaccination client uses two transient retries inside a five-second total
+HTTP timeout. Failed, malformed, and wrong-dog responses are never treated as empty
+history. Vaccination history is not cached. In Development, VaccinationsApi:BaseUrl
+is http://localhost:5393/. Other environments must configure this setting explicitly.
+
+Start DogWorld.Vaccinations.Api, DogWorld.Breeds.Api, DogWorld.Api and DogWorld.Web
+using their http launch profiles. Apply the vaccination migrations before startup.
+The dog details page displays a responsive history timeline, recorded dates, a
+no-history message, or an unavailable message with a retry button. Retry reloads
+the dog details. No clinical vaccination status is inferred from these dates.
