@@ -483,3 +483,7 @@ $RECYCLE.BIN/
 
 # Additional GitHub ignore rules
 CodeCoverage/
+
+# Per-machine telemetry configuration
+appsettings.Local.json
+telemetry.local.json

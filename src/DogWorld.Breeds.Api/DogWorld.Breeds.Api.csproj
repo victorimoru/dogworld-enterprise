@@ -16,4 +16,7 @@
     <ProjectReference Include="..\DogWorld.Contracts\DogWorld.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="../Shared/DevelopmentFaultMiddleware.cs" Link="Middleware/DevelopmentFaultMiddleware.cs" />
+  </ItemGroup>
 </Project>

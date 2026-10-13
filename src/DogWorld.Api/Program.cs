@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using OpenTelemetry.Resources;
 
 var builder = WebApplication.CreateBuilder(args);
+// Local telemetry settings are ignored by Git; environment variables retain precedence.
+builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true).AddEnvironmentVariables();
 
 var telemetryConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]
     ?? builder.Configuration["ApplicationInsights:ConnectionString"];
@@ -13,11 +15,15 @@ if (builder.Configuration.GetValue("ApplicationInsights:Enabled", true)
     && !string.IsNullOrWhiteSpace(telemetryConnectionString))
 {
     builder.Services.AddApplicationInsightsTelemetry(options =>
-        options.ConnectionString = telemetryConnectionString);
+    {
+        options.ConnectionString = telemetryConnectionString;
+        options.SamplingRatio = builder.Configuration.GetValue<float>("ApplicationInsights:SamplingRatio", 1.0f);
+        options.EnableQuickPulseMetricStream = false;
+    });
 
     // Application Insights 3.x uses the OpenTelemetry service name for the cloud role.
     builder.Services.AddOpenTelemetry().ConfigureResource(resource =>
-        resource.AddService(builder.Configuration["OTEL_SERVICE_NAME"] ?? "DogWorld Api"));
+        resource.AddService("DogWorld.Api"));
 }
 
 builder.Services.AddDbContext<DogWorldDbContext>(options =>
@@ -49,6 +55,10 @@ builder.Services.AddHttpClient<DogWorld.Api.Clients.IVaccinationsApiClient, DogW
         ?? throw new InvalidOperationException("Configure VaccinationsApi:BaseUrl before using the vaccination client."));
     http.Timeout = Timeout.InfiniteTimeSpan;
 });
+// A deliberate local lab option prevents cached profiles from hiding injected failures.
+if (builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("ResilienceLab:DisableBreedCache"))
+    builder.Services.AddTransient<DogWorld.Api.Clients.IBreedsApiClient>(services =>
+        services.GetRequiredService<DogWorld.Api.Clients.BreedsApiClient>());
 builder.Services.AddControllers();
 builder.Services.AddCors(options => options.AddPolicy("WebClient", policy =>
 {
@@ -58,7 +68,7 @@ builder.Services.AddCors(options => options.AddPolicy("WebClient", policy =>
         policy.WithOrigins(origins)
               .WithMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
               .AllowAnyHeader()
-              .WithExposedHeaders("Request-Context", "X-Total-Count");
+              .WithExposedHeaders("Request-Context", "X-Total-Count", "X-Trace-Id");
     }
 }));
 builder.Services.AddSwaggerGen();
@@ -67,6 +77,12 @@ builder.Services.AddProblemDetails();
 var app = builder.Build();
 app.UseExceptionHandler();
 app.UseCors("WebClient");
+app.Use(async (context, next) =>
+{
+    if (System.Diagnostics.Activity.Current is { } activity)
+        context.Response.Headers["X-Trace-Id"] = activity.TraceId.ToHexString();
+    await next(context);
+});
 
 if (app.Environment.IsDevelopment())
 {

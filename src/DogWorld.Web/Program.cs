@@ -6,6 +6,22 @@ using BlazorApplicationInsights;
 using BlazorApplicationInsights.Models;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+// WebAssembly cannot read the server's environment variables or user secrets.
+using (var settingsClient = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) })
+{
+    using var settings = await settingsClient.GetAsync("telemetry.local.json");
+    if (settings.IsSuccessStatusCode)
+        builder.Configuration.AddJsonStream(await settings.Content.ReadAsStreamAsync());
+    else if (settings.StatusCode != System.Net.HttpStatusCode.NotFound)
+        settings.EnsureSuccessStatusCode();
+}
+var telemetryConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"]
+    ?? builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
+var telemetryEnabled = builder.Configuration.GetValue("ApplicationInsights:Enabled", true)
+    && !string.IsNullOrWhiteSpace(telemetryConnectionString);
+var telemetryStartup = new DogWorld.Web.Telemetry.TelemetryStartup();
+builder.Services.AddSingleton(telemetryStartup);
+if (!telemetryEnabled) telemetryStartup.Complete();
 var webBaseUri = new Uri(builder.HostEnvironment.BaseAddress);
 var apiBaseUrl = (webBaseUri.Scheme == Uri.UriSchemeHttps
     ? builder.Configuration["ApiBaseUrlHttps"] : null)
@@ -16,8 +32,10 @@ var apiBaseUri = new Uri(apiBaseUrl, UriKind.Absolute);
 builder.Services.AddBlazorApplicationInsights(
     config =>
     {
-        config.ConnectionString = builder.Configuration["ApplicationInsights:ConnectionString"]
-            ?? builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"];
+        config.ConnectionString = telemetryConnectionString;
+        config.DisableTelemetry = !telemetryEnabled;
+        config.DisableFetchTracking = false;
+        config.SamplingPercentage = 100; // Short manual tracing lessons; not a spend cap.
         config.EnableCorsCorrelation = true;
         config.CorrelationHeaderDomains = [apiBaseUri.Authority];
     },
@@ -27,17 +45,22 @@ builder.Services.AddBlazorApplicationInsights(
         {
             Tags = new Dictionary<string, object?>()
             {
-                { "ai.cloud.role", "DogWorld Web" },
+                { "ai.cloud.role", "DogWorld.Web" },
                 { "ai.cloud.roleInstance", "Blazor Wasm" },
             }
         };
 
-        await applicationInsights.AddTelemetryInitializer(telemetryItem);
+        try { await applicationInsights.AddTelemetryInitializer(telemetryItem); }
+        catch (Microsoft.JSInterop.JSException)
+        {
+            Console.Error.WriteLine("Browser telemetry could not initialize. Check the SDK network request or content blockers.");
+        }
+        finally { telemetryStartup.Complete(); }
     },
-    true,
+    telemetryEnabled,
     options =>
     {
-        options.MinLogLevel = LogLevel.Information;
+        options.MinLogLevel = LogLevel.Warning;
     }
 );
 

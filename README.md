@@ -1,59 +1,59 @@
 # DogWorld
 
-A small dog-adoption application for learning Application Insights and observability alongside [Azure Application Insights: APM from Zero to Production](https://www.udemy.com/course/azure-application-insights-apm-from-zero-to-production/).
+A dog-adoption application for learning Application Insights and observability alongside [Azure Application Insights: APM from Zero to Production](https://www.udemy.com/course/azure-application-insights-apm-from-zero-to-production/).
 
-## Current state
+## Current features
 
-The first Green increment implements `GET /api/dogs` through DogService and an EF Core SQL Server repository. It returns Available dogs ordered by name then ID, without tracking or changing them. All 14 existing tests pass (8 unit, 1 endpoint, 5 SQL Server cases); test files were not modified. Test-directory README files describe the historical Red stage.
+- Blazor WebAssembly dog catalogue, pagination, and dog details.
+- Dog API backed by SQL Server, with breed and vaccination enrichment from downstream APIs.
+- Downstream retries, timeouts, breed caching, and partial details when enrichment is unavailable.
+- Correlated browser, API, HTTP dependency, and SQL telemetry in Application Insights.
+- Development-only failure scenarios for retry recovery, exhausted retries, and timeouts.
 
-The frontend displays available dogs with loading, empty, error, and retry states. See [UI setup](docs/available-dogs-ui.md). Migrations and 50 demo dogs are available; telemetry, containers, and remaining business features are not implemented. See [migration and seeding instructions](docs/migrations-and-demo-data.md).
+## Run locally
 
-## Prerequisites and local commands
+Use .NET SDK 9.0.318 (see global.json), Visual Studio 2022 17.14 with the ASP.NET workload if using Visual Studio, and local SQL Server. Open DogWorld.sln. Docker is optional.
 
-- Visual Studio 2022 17.14 with the ASP.NET and web development workload, if using Visual Studio. Open DogWorld.sln.
-- .NET SDK 9.0.318 (or a later patch in the same feature band; see global.json).
-- SQL Server is required to run the API and integration tests. Docker is optional if SQL Server is already installed.
-
-Run from the repository root:
+From the repository root:
 
 ```powershell
 dotnet restore DogWorld.sln
 dotnet build DogWorld.sln --no-restore
-$env:ConnectionStrings__DogWorld = 'Server=localhost;Database=DogWorldLabMigrations;Integrated Security=True;Encrypt=True;TrustServerCertificate=True'
-$env:Database__Initialize = 'true'
-dotnet run --project src/DogWorld.Api --launch-profile http
 ```
 
-In another terminal:
+Configure the local SQL databases and apply migrations before starting. See [migration and seeding instructions](docs/migrations-and-demo-data.md). Local connections use Windows authentication (SSPI).
+
+Run each application in a separate terminal:
 
 ```powershell
+dotnet run --project src/DogWorld.Breeds.Api --launch-profile http
+dotnet run --project src/DogWorld.Vaccinations.Api --launch-profile http
+dotnet run --project src/DogWorld.Api --launch-profile http
 dotnet run --project src/DogWorld.Web --launch-profile http
 ```
 
-For the connected UI, run both projects with --launch-profile https; the frontend calls the API at https://localhost:7192/. See docs/available-dogs-ui.md.
+Open http://localhost:5248. The Dog API exposes Swagger at http://localhost:5157/swagger in Development.
 
-In Development, open `/swagger` on the API URL to explore and call `GET /api/dogs`.
-The generated OpenAPI document is at `/swagger/v1/swagger.json`. Swagger is disabled
-outside Development. The API launch profiles open Swagger automatically.
+## Observability
 
-Use a new dedicated local database. `Database__Initialize=true` applies migrations only in Development. The seed migrations read embedded JSON; `UpdateDemoDogsFromJson` applies full dog records directly by ID through EF Core UpdateData. Disable it after setup. Without configuration the API does not fall back to fake data. TrustServerCertificate is for the local lab only. See [Green verification](docs/green-verification.md) for test configuration.
+Follow [distributed tracing setup](docs/distributed-tracing.md) to configure your own Application Insights resource and inspect correlated transactions. Resource settings are stored in Git-ignored local files; telemetry is disabled by default in tracked configuration.
+
+Use [the resilience lab](docs/resilience-lab.md) to simulate downstream failures and inspect retry attempts and graceful fallback. Stop the simulated service and restart normally when finished.
 
 ## Structure
 
 | Project | Responsibility |
 | --- | --- |
-| src/DogWorld.Web | Standalone Blazor WebAssembly frontend |
-| src/DogWorld.Api | ASP.NET Core API, service, repository, and SQL Server context |
-| src/DogWorld.Contracts | Shared request and response types; currently empty |
-| tests/DogWorld.Api.Tests | 8 service and repository unit cases |
-| tests/DogWorld.IntegrationTests | 1 endpoint and 5 SQL Server cases |
-
-Web and API reference Contracts. Both test projects reference API. No additional architecture layers are introduced at this stage.
+| src/DogWorld.Web | Blazor WebAssembly frontend |
+| src/DogWorld.Api | Dog API, SQL persistence, downstream aggregation and resilience |
+| src/DogWorld.Breeds.Api | Breed information API |
+| src/DogWorld.Vaccinations.Api | Vaccination history API and SQL persistence |
+| src/DogWorld.Contracts | Shared request and response contracts |
+| src/Shared | Development fault middleware compiled into downstream APIs |
+| tests/ | Unit, endpoint, UI, correlation, and SQL integration tests |
 
 ## Working agreements
 
-Read [project definition](docs/project-definition.md), [first-feature acceptance criteria](docs/acceptance-criteria.md), and [observability experiments](docs/observability-experiments.md).
-
 Define → compare structural options → scaffold → Red → compare feature approaches → Green → Challenge → Refactor → Verify independently → Own the result.
 
-The existing tests now pass. Remaining UI and observability acceptance criteria still require their own Red/Green cycles. Never commit credentials or real applicant data.
+See [project definition](docs/project-definition.md), [first-feature acceptance criteria](docs/acceptance-criteria.md), and [observability experiments](docs/observability-experiments.md). Earlier verification documents describe their original increments. SQL integration tests require their documented database setup. Never commit credentials or real applicant data.

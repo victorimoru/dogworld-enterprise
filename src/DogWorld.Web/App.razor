@@ -1,13 +1,55 @@
-<ApplicationInsightsInit IsWasmStandalone="true" />
+@inject DogWorld.Web.Telemetry.TelemetryStartup TelemetryStartup
+@inject Microsoft.JSInterop.IJSRuntime JS
+@implements IDisposable
 
-<Router AppAssembly="@typeof(App).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-    </Found>
-    <NotFound>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <DogWorld.Web.Pages.NotFound />
-        </LayoutView>
-    </NotFound>
-</Router>
+@if (sdkReady)
+{
+    <ApplicationInsightsInit IsWasmStandalone="true" />
+}
+@if (TelemetryStartup.IsReady)
+{
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+        <NotFound>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <DogWorld.Web.Pages.NotFound />
+            </LayoutView>
+        </NotFound>
+    </Router>
+}
+else
+{
+    <p role="status">Preparing DogWorld…</p>
+}
+
+@code {
+    private bool sdkReady;
+    private readonly CancellationTokenSource lifetime = new();
+
+    protected override void OnInitialized() => TelemetryStartup.Ready += OnReady;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender || TelemetryStartup.IsReady) return;
+        try
+        {
+            sdkReady = await JS.InvokeAsync<bool>("dogWorldTelemetry.waitForSdk", lifetime.Token, new object[] { 8000 });
+            if (!sdkReady) TelemetryStartup.Complete();
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Microsoft.JSInterop.JSException) { TelemetryStartup.Complete(); }
+        catch (OperationCanceledException) { }
+    }
+
+    private void OnReady() => _ = InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        TelemetryStartup.Ready -= OnReady;
+        lifetime.Cancel();
+        lifetime.Dispose();
+    }
+}

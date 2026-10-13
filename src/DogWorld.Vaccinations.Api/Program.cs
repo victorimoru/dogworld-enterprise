@@ -1,3 +1,4 @@
+using OpenTelemetry.Resources;
 using DogWorld.Vaccinations.Api.Data;
 using DogWorld.Vaccinations.Api.Repositories;
 using DogWorld.Vaccinations.Api.Services;
@@ -10,6 +11,22 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        // Local telemetry settings are ignored by Git; environment variables retain precedence.
+        builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true).AddEnvironmentVariables();
+        var telemetryConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]
+            ?? builder.Configuration["ApplicationInsights:ConnectionString"];
+        if (builder.Configuration.GetValue("ApplicationInsights:Enabled", true)
+            && !string.IsNullOrWhiteSpace(telemetryConnectionString))
+        {
+            builder.Services.AddApplicationInsightsTelemetry(options =>
+            {
+                options.ConnectionString = telemetryConnectionString;
+                options.SamplingRatio = builder.Configuration.GetValue<float>("ApplicationInsights:SamplingRatio", 1.0f);
+                options.EnableQuickPulseMetricStream = false;
+            });
+            builder.Services.AddOpenTelemetry().ConfigureResource(resource =>
+                resource.AddService("DogWorld.Vaccinations.Api"));
+        }
         builder.Services.AddDbContext<VaccinationDbContext>(options => options.UseSqlServer(
             builder.Configuration.GetConnectionString("Vaccinations")
                 ?? throw new InvalidOperationException("Configure ConnectionStrings:Vaccinations.")));
@@ -20,6 +37,7 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
+        app.UseMiddleware<DogWorld.ResilienceLab.DevelopmentFaultMiddleware>();
         app.UseExceptionHandler();
         if (app.Environment.IsDevelopment())
         {

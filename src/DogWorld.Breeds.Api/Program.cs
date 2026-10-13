@@ -2,6 +2,8 @@ using DogWorld.Breeds.Api.Services;
 using OpenTelemetry.Resources;
 
 var builder = WebApplication.CreateBuilder(args);
+// Local telemetry settings are ignored by Git; environment variables retain precedence.
+builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true).AddEnvironmentVariables();
 
 var telemetryConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]
     ?? builder.Configuration["ApplicationInsights:ConnectionString"];
@@ -10,17 +12,22 @@ if (builder.Configuration.GetValue("ApplicationInsights:Enabled", true)
     && !string.IsNullOrWhiteSpace(telemetryConnectionString))
 {
     builder.Services.AddApplicationInsightsTelemetry(options =>
-        options.ConnectionString = telemetryConnectionString);
+    {
+        options.ConnectionString = telemetryConnectionString;
+        options.SamplingRatio = builder.Configuration.GetValue<float>("ApplicationInsights:SamplingRatio", 1.0f);
+        options.EnableQuickPulseMetricStream = false;
+    });
 
     // Application Insights 3.x uses the OpenTelemetry service name for the cloud role.
     builder.Services.AddOpenTelemetry().ConfigureResource(resource =>
-        resource.AddService(builder.Configuration["OTEL_SERVICE_NAME"] ?? "DogWorld Breeds Api"));
+        resource.AddService("DogWorld.Breeds.Api"));
 }
 
 builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IBreedService, BreedService>();
 
 var app = builder.Build();
+app.UseMiddleware<DogWorld.ResilienceLab.DevelopmentFaultMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
