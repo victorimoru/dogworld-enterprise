@@ -38,23 +38,31 @@ builder.Services.AddScoped<DogPageService>();
 builder.Services.AddScoped<IDogDetailsRepository, DogRepository>();
 builder.Services.AddScoped<DogDetailsService>();
 builder.Services.AddMemoryCache();
-builder.Services.AddSingleton(DogWorld.Api.Resilience.BreedsApiResiliencePolicy.Create());
-builder.Services.AddHttpClient<DogWorld.Api.Clients.BreedsApiClient>(http =>
+builder.Services.AddKeyedSingleton<Polly.ResiliencePipeline<HttpResponseMessage>>("Breeds", (services, _) =>
+    DogWorld.Api.Resilience.BreedsApiResiliencePolicy.Create(logger:
+        services.GetRequiredService<ILoggerFactory>().CreateLogger("DogWorld.Api.Resilience.Breeds")));
+builder.Services.AddKeyedSingleton<Polly.ResiliencePipeline<HttpResponseMessage>>("Vaccinations", (services, _) =>
+    DogWorld.Api.Resilience.VaccinationsApiResiliencePolicy.Create(logger:
+        services.GetRequiredService<ILoggerFactory>().CreateLogger("DogWorld.Api.Resilience.Vaccinations")));
+builder.Services.AddHttpClient("Breeds", http =>
 {
     http.BaseAddress = new Uri(builder.Configuration["BreedsApi:BaseUrl"]
         ?? throw new InvalidOperationException("Configure BreedsApi:BaseUrl before using the breed client."));
     http.Timeout = Timeout.InfiniteTimeSpan; // Polly owns the total request timeout.
-});
+}).AddTypedClient<DogWorld.Api.Clients.BreedsApiClient>((http, services) =>
+    new(http, services.GetRequiredKeyedService<Polly.ResiliencePipeline<HttpResponseMessage>>("Breeds")));
 builder.Services.AddTransient<DogWorld.Api.Clients.IBreedsApiClient>(services =>
     new DogWorld.Api.Clients.CachedBreedsApiClient(
         services.GetRequiredService<DogWorld.Api.Clients.BreedsApiClient>(),
         services.GetRequiredService<Microsoft.Extensions.Caching.Memory.IMemoryCache>()));
-builder.Services.AddHttpClient<DogWorld.Api.Clients.IVaccinationsApiClient, DogWorld.Api.Clients.VaccinationsApiClient>(http =>
+builder.Services.AddHttpClient("Vaccinations", http =>
 {
     http.BaseAddress = new Uri(builder.Configuration["VaccinationsApi:BaseUrl"]
         ?? throw new InvalidOperationException("Configure VaccinationsApi:BaseUrl before using the vaccination client."));
     http.Timeout = Timeout.InfiniteTimeSpan;
-});
+}).AddTypedClient<DogWorld.Api.Clients.IVaccinationsApiClient>((http, services) =>
+    new DogWorld.Api.Clients.VaccinationsApiClient(http,
+        services.GetRequiredKeyedService<Polly.ResiliencePipeline<HttpResponseMessage>>("Vaccinations")));
 // A deliberate local lab option prevents cached profiles from hiding injected failures.
 if (builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("ResilienceLab:DisableBreedCache"))
     builder.Services.AddTransient<DogWorld.Api.Clients.IBreedsApiClient>(services =>

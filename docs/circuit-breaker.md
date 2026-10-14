@@ -1,12 +1,12 @@
 # Circuit breaker increment — acceptance criteria
 
-Status: first Red increment. No production implementation yet.
+Status: implemented; original Red tests preserved and passing.
 
 ## Policy decision
 
 Use independent, application-lifetime circuit state for Breeds and Vaccinations.
 A logical call includes its original HTTP attempt and up to two retries. Count its
-final outcome once. Proposed composition: circuit breaker -> existing total timeout
+final outcome once. Composition: circuit breaker -> existing total timeout
 -> existing retry -> HTTP. This also lets the breaker count total timeout failures.
 
 - Sampling window: 30 seconds; minimum throughput: four logical calls.
@@ -31,12 +31,43 @@ final outcome once. Proposed composition: circuit breaker -> existing total time
 - Independent policy instances isolate downstream services.
 - DogDetailsService handles one or both open circuits and preserves healthy enrichment.
 
-## Remaining test increments before completion
+## Validation
 
-- Verify shared state across separate client instances resolved from actual DI registrations.
-- Deterministic clock-based half-open recovery, failed probe reopening, concurrent probe exclusion,
-  and expiry of the sampling window; avoid real-time sleeps in tests.
-- Network failure, total timeout, cancellation, and transition-log coverage.
-- Verify endpoint 200 partial responses and correlated transition telemetry in the local lab.
+Added deterministic-clock tests for successful and failed half-open probes, concurrent
+probe exclusion, sampling-window expiry, and structured transition logs. Added tests
+for network failures, total timeouts, and caller cancellation. Real application-host
+registration tests confirm that clients resolved in separate scopes share their own
+circuit and that the other service remains callable. These tests use HTTP stubs and
+send no telemetry to Azure.
+
+## Local Application Insights exercise
+
+1. Restart Dog API to reset its in-memory circuits. For breed experiments, enable
+   `ResilienceLab__DisableBreedCache=true` before starting Dog API.
+2. Start the chosen downstream with the Unavailable scenario from the resilience lab.
+3. Open dog details four times within 30 seconds. Each failed logical call performs
+   three HTTP attempts. The fourth completed failure opens the circuit.
+4. Request details again immediately: the failed service receives no HTTP call.
+   Dog API returns partial details and records the circuit exception in its fallback log.
+5. Stop the simulated service and restart it normally. At least 15 seconds after the
+   circuit opened, request details again. This call probes recovery and closes the
+   circuit if successful. No background probe is sent merely because time passed.
+6. Inspect the transaction and the logs below. If the probe still fails, the circuit
+   opens for another 15 seconds. Restart normal services when the exercise is done.
+
+```kusto
+traces
+| where timestamp > ago(30m)
+| where cloud_RoleName == 'DogWorld.Api'
+| where message startswith 'Downstream circuit'
+| project timestamp, message, operation_Id, customDimensions
+| order by timestamp asc
+```
+
+Transition fields are CircuitState, DownstreamService, and (on opening) BreakDurationMs.
+Ensure Information logs are enabled for DogWorld.Api.Resilience to see Closed events.
+The pipeline instances live for one Dog API process. Multiple deployed instances would
+have independent circuits. Cache hits do not reach the circuit. This increment's Azure
+portal verification should be performed against your current resource using the steps above.
 
 Polly semantics: https://www.pollydocs.org/strategies/circuit-breaker.html

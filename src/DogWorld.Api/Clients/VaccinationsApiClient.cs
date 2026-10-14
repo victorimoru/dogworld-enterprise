@@ -5,9 +5,9 @@ using Polly;
 
 namespace DogWorld.Api.Clients;
 
-public sealed class VaccinationsApiClient(HttpClient http) : IVaccinationsApiClient
+public sealed class VaccinationsApiClient(HttpClient http, ResiliencePipeline<HttpResponseMessage>? pipeline = null) : IVaccinationsApiClient
 {
-    private readonly ResiliencePipeline<HttpResponseMessage> resilience = VaccinationsApiResiliencePolicy.Create();
+    private readonly ResiliencePipeline<HttpResponseMessage> resilience = pipeline ?? VaccinationsApiResiliencePolicy.Create();
 
     public async Task<IReadOnlyList<VaccinationRecordResponse>> GetByDogIdAsync(
         int dogId,

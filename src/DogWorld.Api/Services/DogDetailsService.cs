@@ -2,6 +2,7 @@ using DogWorld.Api.Clients;
 using DogWorld.Api.Repositories;
 using DogWorld.Contracts;
 using Polly.Timeout;
+using Polly.CircuitBreaker;
 using System.Text.Json;
 
 namespace DogWorld.Api.Services;
@@ -52,5 +53,5 @@ public sealed class DogDetailsService(IDogDetailsRepository repository,
     }
 
     private static bool IsDownstreamFailure(Exception exception) =>
-        exception is HttpRequestException or TimeoutRejectedException or JsonException;
+        exception is HttpRequestException or TimeoutRejectedException or BrokenCircuitException or JsonException;
 }
