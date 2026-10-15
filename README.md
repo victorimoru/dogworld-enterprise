@@ -34,6 +34,13 @@ dotnet run --project src/DogWorld.Web --launch-profile http
 
 Open http://localhost:5248. The Dog API exposes Swagger at http://localhost:5157/swagger in Development.
 
+## Desktop app
+
+The Avalonia desktop catalogue uses the same Dog API, with 12 dogs per page,
+local default illustrations, and loading, empty, error, and retry states.
+Start DogWorld.Api, then run `dotnet run --project src/DogWorld.Desktop`.
+See [desktop setup and acceptance criteria](docs/desktop-catalogue.md).
+
 ## Observability
 
 Follow [distributed tracing setup](docs/distributed-tracing.md) to configure your own Application Insights resource and inspect correlated transactions. Resource settings are stored in Git-ignored local files; telemetry is disabled by default in tracked configuration.

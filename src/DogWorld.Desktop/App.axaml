@@ -1,0 +1,17 @@
+<Application xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="DogWorld.Desktop.App" RequestedThemeVariant="Light">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://DogWorld.Desktop/Assets/DogIllustrations.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+  <Application.Styles>
+    <FluentTheme />
+    <Style Selector="Window"><Setter Property="FontFamily" Value="Inter" /><Setter Property="Foreground" Value="#172C3E" /></Style>
+    <Style Selector="Button"><Setter Property="CornerRadius" Value="8" /><Setter Property="Padding" Value="18,11" /></Style>
+    <Style Selector="Button.primary"><Setter Property="Background" Value="#087F86" /><Setter Property="Foreground" Value="White" /></Style>
+    <Style Selector="TextBlock.muted"><Setter Property="Foreground" Value="#647586" /></Style>
+  </Application.Styles>
+</Application>

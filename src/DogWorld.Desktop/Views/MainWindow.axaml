@@ -1,0 +1,70 @@
+<Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:DogWorld.Desktop.ViewModels" xmlns:c="using:DogWorld.Contracts" xmlns:local="using:DogWorld.Desktop"
+        x:Class="DogWorld.Desktop.Views.MainWindow" x:DataType="vm:CatalogueViewModel"
+        Title="DogWorld • Desktop" Width="1280" Height="850" MinWidth="900" MinHeight="600" Background="#F7F8F5">
+  <Window.Resources><local:DogImageConverter x:Key="DogImage" /></Window.Resources>
+  <Grid ColumnDefinitions="220,*" RowDefinitions="*,34">
+    <Border Grid.RowSpan="2" Background="#172C3E" Padding="22,30">
+      <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
+        <StackPanel Orientation="Horizontal" Spacing="10"><TextBlock Text="◈" FontSize="30" Foreground="#65CFCE" /><TextBlock Text="DogWorld" FontWeight="Bold" FontSize="27" Foreground="White" /></StackPanel>
+        <TextBlock Grid.Row="1" Text="ADOPTION MANAGEMENT" FontSize="10" LetterSpacing="2" Foreground="#A8BCCB" Margin="0,36,0,20" />
+        <Border Grid.Row="2" Background="#255563" CornerRadius="8" Padding="16,13"><TextBlock Text="▦   Dogs" Foreground="White" FontWeight="SemiBold" /></Border>
+        <StackPanel Grid.Row="4" Spacing="8"><TextBlock Text="A place to belong." Foreground="White" FontSize="16" /><TextBlock Text="Find their next chapter." Foreground="#A8BCCB" FontSize="12" /></StackPanel>
+      </Grid>
+    </Border>
+    <Grid Grid.Column="1" Margin="32,28,28,16" RowDefinitions="Auto,Auto,*,Auto">
+      <Grid ColumnDefinitions="*,Auto">
+        <StackPanel Spacing="5"><TextBlock Text="Meet your next companion" FontSize="29" FontWeight="Bold" /><TextBlock Text="Available dogs, waiting for a home." Classes="muted" /></StackPanel>
+        <Button Grid.Column="1" Content="↻  Refresh" Command="{Binding RefreshCommand}" VerticalAlignment="Center" Classes="primary" />
+      </Grid>
+      <Grid Grid.Row="1" Margin="0,24,0,18" ColumnDefinitions="*,Auto">
+        <TextBlock Text="{Binding CatalogueSummary}" FontWeight="SemiBold" VerticalAlignment="Center" />
+        <Border Grid.Column="1" Background="#E1F1E9" CornerRadius="14" Padding="12,6"><TextBlock Text="●  Available for adoption" Foreground="#25684B" FontSize="12" /></Border>
+      </Grid>
+      <Grid Grid.Row="2">
+        <ScrollViewer IsVisible="{Binding ShowDogs}" HorizontalScrollBarVisibility="Disabled">
+          <ItemsControl ItemsSource="{Binding Dogs}">
+            <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="c:AvailableDog">
+                <Border Width="280" Margin="0,0,18,20" Background="White" BorderBrush="#E1E6E6" BorderThickness="1" CornerRadius="12" ClipToBounds="True">
+                  <StackPanel>
+                    <Image Source="{Binding Id, Converter={StaticResource DogImage}}" Height="190" Stretch="UniformToFill" AutomationProperties.Name="Default dog illustration" />
+                    <StackPanel Margin="18,14,18,18" Spacing="7">
+                      <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold" />
+                      <TextBlock Text="{Binding Breed}" Classes="muted" TextTrimming="CharacterEllipsis" />
+                      <Grid ColumnDefinitions="*,Auto" Margin="0,7,0,0">
+                        <TextBlock Text="{Binding AgeInMonths, StringFormat='{}{0} months old'}" FontSize="12" Classes="muted" VerticalAlignment="Center" />
+                        <Border Grid.Column="1" Background="#E5F3EA" CornerRadius="12" Padding="9,4"><TextBlock Text="Available" Foreground="#25684B" FontSize="11" /></Border>
+                      </Grid>
+                    </StackPanel>
+                  </StackPanel>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </ScrollViewer>
+        <StackPanel IsVisible="{Binding IsLoading}" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="16" Width="260">
+          <TextBlock Text="Finding your next companion…" HorizontalAlignment="Center" FontWeight="SemiBold" />
+          <ProgressBar IsIndeterminate="True" Height="5" Foreground="#087F86" />
+        </StackPanel>
+        <StackPanel IsVisible="{Binding HasError}" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="14" MaxWidth="420">
+          <TextBlock Text="We couldn’t load the dogs" FontSize="23" FontWeight="Bold" HorizontalAlignment="Center" />
+          <TextBlock Text="Check that DogWorld API is running, then try again." Classes="muted" TextWrapping="Wrap" TextAlignment="Center" />
+          <Button Content="Try again" Command="{Binding RefreshCommand}" Classes="primary" HorizontalAlignment="Center" />
+        </StackPanel>
+        <StackPanel IsVisible="{Binding IsEmpty}" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12">
+          <TextBlock Text="No dogs available just yet" FontSize="23" FontWeight="Bold" />
+          <TextBlock Text="Check back soon for new companions." Classes="muted" HorizontalAlignment="Center" />
+        </StackPanel>
+      </Grid>
+      <Border Grid.Row="3" BorderBrush="#DFE5E6" BorderThickness="0,1,0,0" Padding="0,18,0,0">
+        <Grid ColumnDefinitions="*,Auto">
+          <StackPanel VerticalAlignment="Center" Spacing="4"><TextBlock Text="{Binding PageSummary}" FontWeight="SemiBold" /><TextBlock Text="Illustrations are placeholders, not photos of these dogs." FontSize="11" Classes="muted" /></StackPanel>
+          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10"><Button Content="← Previous" Command="{Binding PreviousCommand}" /><Border Background="#E4F1F0" CornerRadius="8" Padding="15,12"><TextBlock Text="{Binding PageLabel}" Foreground="#087F86" /></Border><Button Content="Next →" Command="{Binding NextCommand}" Classes="primary" /></StackPanel>
+        </Grid>
+      </Border>
+    </Grid>
+    <Border Grid.Column="1" Grid.Row="1" Background="#EDF1F1" Padding="32,8"><TextBlock Text="{Binding Status}" FontSize="11" Classes="muted" /></Border>
+  </Grid>
+</Window>
