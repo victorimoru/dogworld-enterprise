@@ -1,22 +1,26 @@
 <Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="using:DogWorld.Desktop.Views" xmlns:vm="using:DogWorld.Desktop.ViewModels" xmlns:c="using:DogWorld.Contracts" xmlns:local="using:DogWorld.Desktop"
         x:Class="DogWorld.Desktop.Views.MainWindow" x:DataType="vm:CatalogueViewModel"
-        Title="DogWorld • Desktop" Width="1280" Height="850" MinWidth="900" MinHeight="600" Background="#F7F8F5">
+        Title="DogWorld • Desktop" Width="1440" Height="900" MinWidth="1100" MinHeight="600" Background="#F7F8F5">
   <Window.KeyBindings><KeyBinding Gesture="Escape" Command="{Binding Details.CloseCommand}" /></Window.KeyBindings>
   <Window.Resources><local:DogImageConverter x:Key="DogImage" /></Window.Resources>
-  <Grid ColumnDefinitions="220,*" RowDefinitions="*,34">
-    <Border Grid.RowSpan="2" Background="#172C3E" Padding="22,30">
+  <Grid ColumnDefinitions="220,*,Auto" RowDefinitions="*,34">
+    <Border Grid.RowSpan="2" Background="#172C3E" Padding="18,26">
       <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
-        <StackPanel Orientation="Horizontal" Spacing="10"><TextBlock Text="◈" FontSize="30" Foreground="#65CFCE" /><TextBlock Text="DogWorld" FontWeight="Bold" FontSize="27" Foreground="White" /></StackPanel>
+        <StackPanel Orientation="Horizontal" Spacing="10"><TextBlock Text="◈" FontSize="30" Foreground="#65CFCE" /><TextBlock Text="DogWorld" FontWeight="Bold" FontSize="23" Foreground="White" /></StackPanel>
         <TextBlock Grid.Row="1" Text="ADOPTION MANAGEMENT" FontSize="10" LetterSpacing="2" Foreground="#A8BCCB" Margin="0,36,0,20" />
         <Border Grid.Row="2" Background="#255563" CornerRadius="8" Padding="16,13"><TextBlock Text="▦   Dogs" Foreground="White" FontWeight="SemiBold" /></Border>
         <StackPanel Grid.Row="4" Spacing="8"><TextBlock Text="A place to belong." Foreground="White" FontSize="16" /><TextBlock Text="Find their next chapter." Foreground="#A8BCCB" FontSize="12" /></StackPanel>
       </Grid>
     </Border>
-    <Grid Grid.Column="1" Margin="32,28,28,16" RowDefinitions="Auto,Auto,*,Auto">
+    <Grid Grid.Column="1" Margin="26,26,20,16" RowDefinitions="Auto,Auto,*,Auto">
       <Grid ColumnDefinitions="*,Auto">
-        <StackPanel Spacing="5"><TextBlock Text="Meet your next companion" FontSize="29" FontWeight="Bold" /><TextBlock Text="Available dogs, waiting for a home." Classes="muted" /></StackPanel>
-        <Button Grid.Column="1" Content="↻  Refresh" Command="{Binding RefreshCommand}" VerticalAlignment="Center" Classes="primary" />
+        <StackPanel Spacing="5"><TextBlock Text="Dogs" FontSize="29" FontWeight="Bold" /><TextBlock Text="Find their next chapter." Classes="muted" /></StackPanel>
+        <Grid Grid.Column="1" ColumnDefinitions="Auto,Auto" RowDefinitions="Auto,Auto" VerticalAlignment="Center">
+          <Button Grid.Row="0" Grid.Column="0" Content="↻" Height="42" Margin="0,0,10,0" VerticalAlignment="Top" Command="{Binding RefreshCommand}" ToolTip.Tip="Refresh catalogue" AutomationProperties.Name="Refresh catalogue" />
+          <Button Grid.Row="0" Grid.Column="1" Content="+  Add Dog" Height="42" VerticalAlignment="Top" Classes="primary" IsEnabled="False" AutomationProperties.Name="Add Dog — coming soon" />
+          <TextBlock Grid.Row="1" Grid.Column="1" Text="Coming soon" Margin="0,4,0,0" FontSize="10" Classes="muted" HorizontalAlignment="Center" />
+        </Grid>
       </Grid>
       <Grid Grid.Row="1" Margin="0,24,0,18" ColumnDefinitions="*,Auto">
         <TextBlock Text="{Binding CatalogueSummary}" FontWeight="SemiBold" VerticalAlignment="Center" />
@@ -28,12 +32,12 @@
             <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
               <DataTemplate x:DataType="c:AvailableDog">
-                <Button Width="280" Margin="0,0,18,20" Padding="0" HorizontalContentAlignment="Stretch" Command="{ReflectionBinding $parent[Window].DataContext.SelectDogCommand}" CommandParameter="{Binding Id}" AutomationProperties.Name="{Binding Name, StringFormat=View details for {0}}">
+                <Button Width="222" Margin="0,0,14,16" Padding="0" HorizontalContentAlignment="Stretch" Command="{ReflectionBinding $parent[Window].DataContext.SelectDogCommand}" CommandParameter="{Binding Id}" AutomationProperties.Name="{Binding Name, StringFormat=View details for {0}}">
                 <Border Background="White" BorderBrush="#E1E6E6" BorderThickness="1" CornerRadius="12" ClipToBounds="True">
                   <StackPanel>
-                    <Image Source="{Binding Id, Converter={StaticResource DogImage}}" Height="190" Stretch="UniformToFill" AutomationProperties.Name="Default dog illustration" />
-                    <StackPanel Margin="18,14,18,18" Spacing="7">
-                      <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold" />
+                    <Image Source="{Binding Id, Converter={StaticResource DogImage}}" Height="158" Stretch="UniformToFill" AutomationProperties.Name="Default dog illustration" />
+                    <StackPanel Margin="12,10,12,12" Spacing="5">
+                      <TextBlock Text="{Binding Name}" FontSize="17" FontWeight="Bold" />
                       <TextBlock Text="{Binding Breed}" Classes="muted" TextTrimming="CharacterEllipsis" />
                       <Grid ColumnDefinitions="*,Auto" Margin="0,7,0,0">
                         <TextBlock Text="{Binding AgeInMonths, StringFormat='{}{0} months old'}" FontSize="12" Classes="muted" VerticalAlignment="Center" />
@@ -64,11 +68,15 @@
       <Border Grid.Row="3" BorderBrush="#DFE5E6" BorderThickness="0,1,0,0" Padding="0,18,0,0">
         <Grid ColumnDefinitions="*,Auto">
           <StackPanel VerticalAlignment="Center" Spacing="4"><TextBlock Text="{Binding PageSummary}" FontWeight="SemiBold" /><TextBlock Text="Illustrations are placeholders, not photos of these dogs." FontSize="11" Classes="muted" /></StackPanel>
-          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10"><Button Content="← Previous" Command="{Binding PreviousCommand}" /><Border Background="#E4F1F0" CornerRadius="8" Padding="15,12"><TextBlock Text="{Binding PageLabel}" Foreground="#087F86" /></Border><Button Content="Next →" Command="{Binding NextCommand}" Classes="primary" /></StackPanel>
+          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10"><Button Content="‹" ToolTip.Tip="Previous page" AutomationProperties.Name="Previous page" Command="{Binding PreviousCommand}" /><Border Background="#E4F1F0" CornerRadius="8" Padding="15,12"><TextBlock Text="{Binding PageLabel}" Foreground="#087F86" /></Border><Button Content="›" ToolTip.Tip="Next page" AutomationProperties.Name="Next page" Command="{Binding NextCommand}" Classes="primary" /></StackPanel>
         </Grid>
       </Border>
     </Grid>
-    <views:DogDetailsPanel Grid.Column="1" Width="400" HorizontalAlignment="Right" IsVisible="{Binding IsOpen, FallbackValue=False, TargetNullValue=False}" DataContext="{Binding Details}" />
-    <Border Grid.Column="1" Grid.Row="1" Background="#EDF1F1" Padding="32,8"><TextBlock Text="{Binding Status}" FontSize="11" Classes="muted" /></Border>
+    <views:DogDetailsPanel Grid.Column="2" Width="354" HorizontalAlignment="Right" IsVisible="{Binding IsOpen, FallbackValue=False, TargetNullValue=False}" DataContext="{Binding Details}" />
+    <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Background="#EDF1F1" Padding="32,8"><TextBlock Text="{Binding Status}" FontSize="11" Classes="muted" /></Border>
   </Grid>
 </Window>
+
+
+
+

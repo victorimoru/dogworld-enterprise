@@ -11,9 +11,12 @@ public sealed class DogDetailsClient(HttpClient http) : IDogDetailsClient
         using var response = await http.GetAsync($"api/dogs/{id}",token);
         if(response.StatusCode == HttpStatusCode.NotFound) return null;
         response.EnsureSuccessStatusCode();
+
         var dog = await response.Content.ReadFromJsonAsync<DogDetails>(token);
-        if(dog is null || dog.Id != id || string.IsNullOrWhiteSpace(dog.Name))
+
+        if (dog is null || dog.Id != id || string.IsNullOrWhiteSpace(dog.Name))
             throw new JsonException("Expected details for the selected dog.");
+
         return dog;
     }
 }

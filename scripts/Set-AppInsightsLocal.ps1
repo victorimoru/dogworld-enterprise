@@ -9,6 +9,7 @@ if ($ConnectionString -notmatch 'InstrumentationKey=[0-9a-fA-F-]{36}(;|$)') {
     throw 'Supply the Application Insights connection string, not a SQL connection string.'
 }
 $relativePaths = @(
+    'src/DogWorld.Desktop/appsettings.Local.json',
     'src/DogWorld.Api/appsettings.Local.json',
     'src/DogWorld.Breeds.Api/appsettings.Local.json',
     'src/DogWorld.Vaccinations.Api/appsettings.Local.json',
@@ -24,5 +25,6 @@ foreach ($relativePath in $relativePaths) {
     $settings | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath $path -Encoding utf8
     Write-Output "Configured $relativePath"
 }
-Write-Output 'Restart/rebuild all four applications. These configuration files are ignored by Git.'
+Write-Output 'Restart/rebuild all five applications. These configuration files are ignored by Git.'
 Write-Output 'Browser configuration is public; never put credentials in telemetry.local.json.'
+

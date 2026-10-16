@@ -23,4 +23,5 @@
     <ProjectReference Include="..\..\src\DogWorld.Desktop\DogWorld.Desktop.csproj" />
   </ItemGroup>
 
-</Project>
+<ItemGroup><FrameworkReference Include="Microsoft.AspNetCore.App" /></ItemGroup></Project>
+
