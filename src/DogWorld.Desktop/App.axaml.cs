@@ -16,7 +16,7 @@ public partial class App : Application
             if (!Uri.TryCreate(endpoint.TrimEnd('/') + "/", UriKind.Absolute, out var uri) || uri.Scheme is not ("http" or "https"))
                 throw new InvalidOperationException("DOGWORLD_API_BASE_URL must be an absolute HTTP or HTTPS URL.");
             var http = new HttpClient { BaseAddress = uri, Timeout = TimeSpan.FromSeconds(15) };
-            var vm = new CatalogueViewModel(new DogCatalogueClient(http));
+            var vm = new CatalogueViewModel(new DogCatalogueClient(http), new DogDetailsViewModel(new DogDetailsClient(http)));
             desktop.MainWindow = new MainWindow { DataContext = vm };
             desktop.Exit += (_, _) => { vm.Dispose(); http.Dispose(); };
         }

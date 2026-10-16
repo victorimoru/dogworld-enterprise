@@ -12,7 +12,7 @@ public sealed class CatalogueViewModel : ObservableObject, IDisposable
     private bool disposed;
     private bool loaded;
     private int requestedPage = 1;
-    public const int PageSize = 8;
+    public const int PageSize = 12;
     public IReadOnlyList<AvailableDog> Dogs { get; private set; } = [];
     public bool IsLoading { get; private set; }
     public bool HasError { get; private set; }
@@ -31,9 +31,14 @@ public sealed class CatalogueViewModel : ObservableObject, IDisposable
     public IAsyncRelayCommand PreviousCommand { get; }
     public IAsyncRelayCommand NextCommand { get; }
 
-    public CatalogueViewModel(IDogCatalogueClient client)
+    public DogDetailsViewModel? Details { get; }
+    public IAsyncRelayCommand<int> SelectDogCommand { get; }
+
+    public CatalogueViewModel(IDogCatalogueClient client, DogDetailsViewModel? details = null)
     {
         this.client = client;
+        Details = details;
+        SelectDogCommand = new AsyncRelayCommand<int>(id => Details!.SelectAsync(id), id => Details is not null && id > 0 && !disposed, AsyncRelayCommandOptions.AllowConcurrentExecutions);
         RefreshCommand = new AsyncRelayCommand(() => LoadAsync(requestedPage), () => !IsLoading && !disposed);
         PreviousCommand = new AsyncRelayCommand(() => LoadAsync(Page - 1), () => !IsLoading && !HasError && Page > 1 && !disposed);
         NextCommand = new AsyncRelayCommand(() => LoadAsync(Page + 1), () => !IsLoading && !HasError && Page < TotalPages && !disposed);
@@ -88,6 +93,8 @@ public sealed class CatalogueViewModel : ObservableObject, IDisposable
     {
         if (disposed) return;
         disposed = true;
+        Details?.Dispose();
+        SelectDogCommand.NotifyCanExecuteChanged();
         lifetime.Cancel();
         lifetime.Dispose();
         NotifyState();

@@ -11,7 +11,7 @@ Acceptance criteria:
 - Show local default illustrations with an explicit placeholder label.
 - Keep HTTP access out of the view; test view-model behaviour with a stub client.
 
-Scope: catalogue only. Details, adoption actions, filters, and desktop telemetry are later increments.
+Scope: catalogue and dog details. Adoption actions, filters, and desktop telemetry are later increments.
 
 Run DogWorld.Api normally, then:
 
@@ -45,3 +45,20 @@ absolute PNG path before running it. The preview uses test data, not the SQL dat
 Live API use requires the configured DogWorld database and its migrations.
 The desktop test project uses xUnit 3 because Avalonia 12 headless support requires it;
 existing test projects remain unchanged.
+
+## Dog details panel
+
+Select a dog tile to open the right-hand details panel. The panel calls
+GET /api/dogs/{id} and shows the existing aggregated breed profile and vaccination
+history. Start both downstream APIs for complete enrichment; unavailable enrichment
+is displayed separately from an empty vaccination list.
+
+Loading, not-found, error, retry, and refresh states are supported. Selecting another
+dog or closing the panel cancels the pending request; late responses cannot replace
+the current selection. Close with the cross button or Escape. The catalogue page is
+preserved. The page size is 12.
+
+Six selection/state tests and five HTTP-client cases were first verified failing
+against scaffolds. A rendered UI test also verifies tile command bindings, displayed
+breed/vaccination content, and preservation of the catalogue page when closing.
+Set DOGWORLD_DETAILS_PREVIEW to an absolute PNG path to capture the test-data preview.

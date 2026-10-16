@@ -1,7 +1,8 @@
 <Window xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:DogWorld.Desktop.ViewModels" xmlns:c="using:DogWorld.Contracts" xmlns:local="using:DogWorld.Desktop"
+        xmlns:views="using:DogWorld.Desktop.Views" xmlns:vm="using:DogWorld.Desktop.ViewModels" xmlns:c="using:DogWorld.Contracts" xmlns:local="using:DogWorld.Desktop"
         x:Class="DogWorld.Desktop.Views.MainWindow" x:DataType="vm:CatalogueViewModel"
         Title="DogWorld • Desktop" Width="1280" Height="850" MinWidth="900" MinHeight="600" Background="#F7F8F5">
+  <Window.KeyBindings><KeyBinding Gesture="Escape" Command="{Binding Details.CloseCommand}" /></Window.KeyBindings>
   <Window.Resources><local:DogImageConverter x:Key="DogImage" /></Window.Resources>
   <Grid ColumnDefinitions="220,*" RowDefinitions="*,34">
     <Border Grid.RowSpan="2" Background="#172C3E" Padding="22,30">
@@ -27,7 +28,8 @@
             <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
               <DataTemplate x:DataType="c:AvailableDog">
-                <Border Width="280" Margin="0,0,18,20" Background="White" BorderBrush="#E1E6E6" BorderThickness="1" CornerRadius="12" ClipToBounds="True">
+                <Button Width="280" Margin="0,0,18,20" Padding="0" HorizontalContentAlignment="Stretch" Command="{ReflectionBinding $parent[Window].DataContext.SelectDogCommand}" CommandParameter="{Binding Id}" AutomationProperties.Name="{Binding Name, StringFormat=View details for {0}}">
+                <Border Background="White" BorderBrush="#E1E6E6" BorderThickness="1" CornerRadius="12" ClipToBounds="True">
                   <StackPanel>
                     <Image Source="{Binding Id, Converter={StaticResource DogImage}}" Height="190" Stretch="UniformToFill" AutomationProperties.Name="Default dog illustration" />
                     <StackPanel Margin="18,14,18,18" Spacing="7">
@@ -40,6 +42,7 @@
                     </StackPanel>
                   </StackPanel>
                 </Border>
+                </Button>
               </DataTemplate>
             </ItemsControl.ItemTemplate>
           </ItemsControl>
@@ -65,6 +68,7 @@
         </Grid>
       </Border>
     </Grid>
+    <views:DogDetailsPanel Grid.Column="1" Width="400" HorizontalAlignment="Right" IsVisible="{Binding IsOpen, FallbackValue=False, TargetNullValue=False}" DataContext="{Binding Details}" />
     <Border Grid.Column="1" Grid.Row="1" Background="#EDF1F1" Padding="32,8"><TextBlock Text="{Binding Status}" FontSize="11" Classes="muted" /></Border>
   </Grid>
 </Window>

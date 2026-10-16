@@ -1,0 +1,53 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:DogWorld.Desktop.ViewModels" xmlns:local="using:DogWorld.Desktop"
+             x:Class="DogWorld.Desktop.Views.DogDetailsPanel" x:DataType="vm:DogDetailsViewModel">
+  <UserControl.Resources><local:DogImageConverter x:Key="DogImage" /></UserControl.Resources>
+  <Border Background="#FFFFFF" BorderBrush="#DDE6E6" BorderThickness="1,0,0,0" Padding="24" BoxShadow="-6 0 18 0 #14000000">
+    <Grid RowDefinitions="Auto,*">
+      <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,20">
+        <StackPanel Spacing="5"><TextBlock Text="Dog details" FontSize="24" FontWeight="Bold" /><TextBlock Text="A little more about your companion" FontSize="12" Classes="muted" /></StackPanel>
+        <Button Grid.Column="1" Content="×" FontSize="20" Padding="12,5" Command="{Binding CloseCommand}" AutomationProperties.Name="Close dog details" ToolTip.Tip="Close (Esc)" />
+      </Grid>
+      <Grid Grid.Row="1">
+        <StackPanel IsVisible="{Binding IsLoading}" VerticalAlignment="Center" Spacing="16"><TextBlock Text="Getting to know your companion…" TextAlignment="Center" /><ProgressBar IsIndeterminate="True" Height="5" Foreground="#087F86" /></StackPanel>
+        <StackPanel IsVisible="{Binding HasError}" VerticalAlignment="Center" Spacing="14"><TextBlock Text="Details couldn’t be loaded" FontWeight="Bold" FontSize="20" TextWrapping="Wrap" /><TextBlock Text="Please check your connection and try again." TextWrapping="Wrap" Classes="muted" /><Button Content="Try again" Classes="primary" Command="{Binding RetryCommand}" /></StackPanel>
+        <StackPanel IsVisible="{Binding NotFound}" VerticalAlignment="Center" Spacing="14"><TextBlock Text="Dog not found" FontWeight="Bold" FontSize="22" /><TextBlock Text="This dog may no longer be listed. Close this panel and refresh the catalogue." TextWrapping="Wrap" Classes="muted" /></StackPanel>
+        <ScrollViewer IsVisible="{Binding HasDog}" HorizontalScrollBarVisibility="Disabled">
+          <StackPanel Spacing="18">
+            <Border CornerRadius="12" ClipToBounds="True"><Image Source="{Binding Dog.Id, Converter={StaticResource DogImage}}" Height="220" Stretch="UniformToFill" AutomationProperties.Name="Default dog illustration" /></Border>
+            <TextBlock Text="Default illustration · not a photo of this dog" FontSize="10" Classes="muted" />
+            <Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="5"><TextBlock Text="{Binding Dog.Name}" FontSize="28" FontWeight="Bold" TextWrapping="Wrap" /><TextBlock Text="{Binding Dog.Breed}" Classes="muted" TextWrapping="Wrap" /></StackPanel>
+              <Border Grid.Column="1" Background="#E4F1F0" CornerRadius="12" Padding="10,5" VerticalAlignment="Top"><TextBlock Text="{Binding Dog.Status}" Foreground="#087F86" FontSize="12" /></Border>
+            </Grid>
+            <TextBlock Text="{Binding Dog.AgeInMonths, StringFormat='Age: {0} months'}" />
+            <Border Height="1" Background="#E3E9E9" />
+            <TextBlock Text="Breed profile" FontWeight="Bold" FontSize="18" />
+            <TextBlock IsVisible="{Binding BreedUnavailable}" Text="Breed information is temporarily unavailable." TextWrapping="Wrap" Classes="muted" />
+            <StackPanel IsVisible="{Binding HasBreed}" Spacing="10">
+              <TextBlock Text="{Binding Dog.BreedDetails.Temperament}" TextWrapping="Wrap" />
+              <TextBlock Text="{Binding Dog.BreedDetails.BreedGroup, StringFormat='Group: {0}'}" TextWrapping="Wrap" Classes="muted" />
+              <TextBlock Text="{Binding Dog.BreedDetails.LifeExpectancy, StringFormat='Life expectancy: {0}'}" TextWrapping="Wrap" Classes="muted" />
+              <TextBlock Text="{Binding Dog.BreedDetails.WeightRange, StringFormat='Weight: {0}'}" TextWrapping="Wrap" Classes="muted" />
+              <TextBlock Text="{Binding Dog.BreedDetails.Origin, StringFormat='Origin: {0}'}" TextWrapping="Wrap" Classes="muted" />
+            </StackPanel>
+            <Border Height="1" Background="#E3E9E9" />
+            <TextBlock Text="Vaccination history" FontWeight="Bold" FontSize="18" />
+            <Border IsVisible="{Binding VaccinationsUnavailable}" Background="#FFF3DE" CornerRadius="8" Padding="12"><TextBlock Text="Vaccination history is temporarily unavailable. This does not mean there are no records." TextWrapping="Wrap" Foreground="#79551F" /></Border>
+            <TextBlock IsVisible="{Binding NoVaccinations}" Text="No vaccinations have been recorded." TextWrapping="Wrap" Classes="muted" />
+            <ItemsControl ItemsSource="{Binding Vaccinations}">
+              <ItemsControl.ItemTemplate><DataTemplate x:DataType="vm:VaccinationRow">
+                <Border Background="#F3F7F6" CornerRadius="8" Padding="14" Margin="0,0,0,10"><StackPanel Spacing="7">
+                  <TextBlock Text="{Binding Name}" FontWeight="SemiBold" TextWrapping="Wrap" />
+                  <TextBlock Text="{Binding Administered, StringFormat='Administered: {0}'}" FontSize="12" Classes="muted" />
+                  <TextBlock Text="{Binding NextDue, StringFormat='Next due: {0}'}" FontSize="12" Classes="muted" />
+                </StackPanel></Border>
+              </DataTemplate></ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Button Content="↻  Refresh details" Command="{Binding RetryCommand}" HorizontalAlignment="Stretch" />
+          </StackPanel>
+        </ScrollViewer>
+      </Grid>
+    </Grid>
+  </Border>
+</UserControl>
